@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Signup | Exam Portal</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <div class="container">
+    <h1>Create Account</h1>
+
+    <input id="name" type="text" placeholder="Full Name" />
+
+    <input id="email" type="email" placeholder="Email Address" />
+
+    <input id="password" type="password" placeholder="Password" />
+
+    <select id="role">
+      <option value="">Select Role</option>
+      <option value="CREATOR">Exam Creator</option>
+      <option value="TAKER">Exam Taker</option>
+    </select>
+
+    <button onclick="signup()">Sign Up</button>
+
+    <p style="text-align:center; margin-top:15px;">
+      Already have an account?
+      <a href="./login.html">Login</a>
+    </p>
+  </div>
+
+  <script src="../js/auth.js"></script>
+
+</body>
+</html>

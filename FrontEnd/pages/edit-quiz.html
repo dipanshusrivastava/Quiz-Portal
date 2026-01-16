@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Quiz</title>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <div class="container-question">
+      <div class="card edit-card">
+        <h2>Edit Quiz</h2>
+
+        <!-- Quiz title -->
+        <input id="title" placeholder="Quiz title" />
+
+        <!-- Questions will be injected here dynamically -->
+        <div id="questions"></div>
+
+        <button onclick="saveQuiz()">Save Changes</button>
+      </div>
+    </div>
+
+    <script src="../js/edit-quiz.js"></script>
+  </body>
+</html>

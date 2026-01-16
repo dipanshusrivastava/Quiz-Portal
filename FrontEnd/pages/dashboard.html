@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard | Exam Portal</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <style>
+      .quiz-card {
+        background: #ffffff;
+        padding: 16px;
+        border-radius: 8px;
+        margin-bottom: 12px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .quiz-actions button {
+        margin-right: 10px;
+      }
+
+      .status {
+        font-size: 13px;
+        font-weight: bold;
+        color: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard">
+      <h1>Dashboard</h1>
+      <p class="role-text" id="roleText"></p>
+
+      <!-- CREATOR SECTION -->
+      <div id="creatorSection" class="card" style="display: none">
+        <h2>Exam Creator</h2>
+        <p>Create and manage your quizzes.</p>
+
+        <a href="./create-quiz.html">
+          <button>Create New Quiz</button>
+        </a>
+
+        <h3 style="margin-top: 20px">Your Quizzes</h3>
+        <div id="quizList"></div>
+      </div>
+
+      <!-- TAKER SECTION -->
+      <div id="takerSection" class="card" style="display: none">
+        <h2>Exam Taker</h2>
+        <p>View and attempt available quizzes.</p>
+
+        <a href="./available-quizzes.html">
+          <button>View Available Quizzes</button>
+        </a>
+      </div>
+
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+      // 🔐 Authentication check
+      const token = localStorage.getItem("token");
+      const role = localStorage.getItem("role");
+
+      if (!token || !role) {
+        window.location.href = "./login.html";
+      }
+
+      document.getElementById("roleText").innerText = `Logged in as: ${role}`;
+
+      // 🎯 Role-based UI
+      if (role === "CREATOR") {
+        document.getElementById("creatorSection").style.display = "block";
+        loadMyQuizzes();
+      } else {
+        document.getElementById("takerSection").style.display = "block";
+      }
+
+      // 📦 Load only creator's quizzes
+      function loadMyQuizzes() {
+        fetch("http://localhost:5000/api/quiz/my-quizzes", {
+          headers: {
+           Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((res) => res.json())
+          .then((quizzes) => {
+            const quizList = document.getElementById("quizList");
+            quizList.innerHTML = "";
+
+            if (!quizzes.length) {
+              quizList.innerHTML = "<p>No quizzes created yet.</p>";
+              return;
+            }
+
+            quizzes.forEach((quiz) => {
+              quizList.innerHTML += `
+                <div class="quiz-card">
+                  <h4>${quiz.title}</h4>
+                  <p class="status">Status: ${quiz.status}</p>
+
+                  <div class="quiz-actions">
+                    <button onclick="editQuiz(${quiz.id})">Edit Quiz</button>
+                    <button onclick="hostQuiz(${quiz.id})">Host Quiz</button>
+                  </div>
+                </div>
+              `;
+            });
+          })
+          .catch(() => {
+            alert("Failed to load quizzes");
+          });
+      }
+
+      // ✏️ Edit quiz (redirect)
+      function editQuiz(id) {
+        window.location.href = `edit-quiz.html?id=${id}`;
+      }
+
+      // 🚀 Host quiz (redirect)
+      function hostQuiz(id) {
+        window.location.href = `host-quiz.html?id=${id}`;
+      }
+
+      // 🚪 Logout
+      function logout() {
+        localStorage.clear();
+        window.location.href = "./login.html";
+      }
+    </script>
+  </body>
+</html>
