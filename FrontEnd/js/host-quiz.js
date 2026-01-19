@@ -1,6 +1,8 @@
 const quizId = new URLSearchParams(window.location.search).get("id");
 const token = localStorage.getItem("token");
 
+
+
 function host() {
   const passcode = document.getElementById("passcode").value;
   const duration = document.getElementById("duration").value;

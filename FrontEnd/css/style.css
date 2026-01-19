@@ -294,3 +294,9 @@ th {
   margin-bottom: 10px;
   font-size: 15px;
 }
+
+.disabled-btn {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}

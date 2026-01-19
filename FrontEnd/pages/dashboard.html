@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -78,7 +78,7 @@
       function loadMyQuizzes() {
         fetch("http://localhost:5000/api/quiz/my-quizzes", {
           headers: {
-           Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         })
           .then((res) => res.json())
@@ -93,16 +93,20 @@
 
             quizzes.forEach((quiz) => {
               quizList.innerHTML += `
-                <div class="quiz-card">
-                  <h4>${quiz.title}</h4>
-                  <p class="status">Status: ${quiz.status}</p>
+    <div class="quiz-card">
+      <h4>${quiz.title}</h4>
+      <p class="status">Status: ${quiz.status}</p>
 
-                  <div class="quiz-actions">
-                    <button onclick="editQuiz(${quiz.id})">Edit Quiz</button>
-                    <button onclick="hostQuiz(${quiz.id})">Host Quiz</button>
-                  </div>
-                </div>
-              `;
+      <div class="quiz-actions">
+        ${
+          quiz.status !== "LIVE"
+            ? `<button onclick="editQuiz(${quiz.id})">Edit Quiz</button>`
+            : ``
+        }
+        <button onclick="hostQuiz(${quiz.id})">Host Quiz</button>
+      </div>
+    </div>
+  `;
             });
           })
           .catch(() => {
@@ -124,6 +128,10 @@
       function logout() {
         localStorage.clear();
         window.location.href = "./login.html";
+      }
+
+      function editBlocked() {
+        alert("You cannot edit the quiz right now because it is LIVE.");
       }
     </script>
   </body>

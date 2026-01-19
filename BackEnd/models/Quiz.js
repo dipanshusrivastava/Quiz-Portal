@@ -28,7 +28,7 @@ const Quiz = sequelize.define("Quiz", {
   },
 
   status: {
-    type: DataTypes.ENUM("DRAFT", "LIVE"),
+    type: DataTypes.ENUM("DRAFT", "LIVE", "Completed"),
     defaultValue: "DRAFT",
   },
 });

@@ -9,6 +9,13 @@ const router = express.Router();
 GET all quizzes (titles only)
 -----------------------------------
 */
+
+function isQuizExpired(quiz) {
+  const start = new Date(quiz.startTime);
+  const end = new Date(start.getTime() + quiz.duration * 60000);
+  return new Date() > end;
+}
+
 router.get("/", async (req, res) => {
   try {
     const quizzes = await Quiz.findAll({
@@ -88,15 +95,41 @@ router.post("/create", auth, async (req, res) => {
 router.get("/my-quizzes", auth, async (req, res) => {
   try {
     const quizzes = await Quiz.findAll({
-      where: { creatorId: req.user.id }, // 👈 filter
+      where: { creatorId: req.user.id },
+      attributes: ["id", "title", "status", "startTime", "duration"],
+    });
+
+    const now = new Date();
+
+    // 🔄 Auto-update status if quiz time is over
+    for (const quiz of quizzes) {
+      if (
+        quiz.status === "LIVE" &&
+        quiz.startTime &&
+        quiz.duration
+      ) {
+        const start = new Date(quiz.startTime);
+        const end = new Date(start.getTime() + quiz.duration * 60000);
+
+        if (now > end) {
+          await quiz.update({ status: "COMPLETED" });
+        }
+      }
+    }
+
+    // 🔁 Fetch updated data (clean response)
+    const updatedQuizzes = await Quiz.findAll({
+      where: { creatorId: req.user.id },
       attributes: ["id", "title", "status"],
     });
 
-    res.json(quizzes);
+    res.json(updatedQuizzes);
   } catch (err) {
+    console.error("MY QUIZZES ERROR:", err);
     res.status(500).json({ message: "Failed to load quizzes" });
   }
 });
+
 
 // GET QUIZ FOR EDIT (NO PASSCODE)
 router.get("/edit/:id", async (req, res) => {
@@ -129,7 +162,7 @@ router.get("/edit/:id", async (req, res) => {
 
 //
 // UPDATE QUIZ
-router.put("/:id", async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   try {
     const { title, questions } = req.body;
     const quizId = req.params.id;
@@ -142,17 +175,36 @@ router.put("/:id", async (req, res) => {
       return res.status(404).json({ message: "Quiz not found" });
     }
 
-    // Update title
+    // 🔒 Ownership check
+    if (quiz.creatorId !== req.user.id) {
+      return res.status(403).json({ message: "Not authorized to edit this quiz" });
+    }
+
+    // ❌ Block editing while quiz is LIVE
+    if (quiz.status === "LIVE") {
+      return res.status(403).json({
+        message: "Quiz cannot be edited while it is LIVE",
+      });
+    }
+
+    // ❌ Basic validation
+    if (!title || !questions || !questions.length) {
+      return res.status(400).json({
+        message: "Title and questions are required",
+      });
+    }
+
+    // ✅ Update title
     quiz.title = title;
     await quiz.save();
 
-    // Remove old questions & options
+    // 🧹 Remove old questions & options
     for (const q of quiz.Questions) {
       await Option.destroy({ where: { QuestionId: q.id } });
     }
     await Question.destroy({ where: { QuizId: quizId } });
 
-    // Recreate questions
+    // 🔁 Recreate questions
     for (const q of questions) {
       const question = await Question.create({
         text: q.question,
@@ -170,10 +222,11 @@ router.put("/:id", async (req, res) => {
 
     res.json({ message: "Quiz updated successfully" });
   } catch (err) {
-    console.error(err);
+    console.error("EDIT QUIZ ERROR:", err);
     res.status(500).json({ message: "Failed to update quiz" });
   }
 });
+
 
 //  hosting
 router.post("/host/:id", auth, async (req, res) => {
@@ -240,30 +293,46 @@ router.get("/:id", async (req, res) => {
       return res.status(404).json({ message: "Quiz not found" });
     }
 
-    // startTime
-    if (quiz.startTime) {
-      const now = new Date();
-      const start = new Date(quiz.startTime);
-
-      if (now < start) {
-        return res.status(403).json({
-          message: "Quiz has not started yet",
-          startsIn: start - now,
-        });
-      }
+    // ❌ Quiz not hosted yet
+    if (quiz.status === "DRAFT") {
+      return res.status(403).json({ message: "Quiz is not live yet" });
     }
 
-    // Passcode check
+    const now = new Date();
+    const start = new Date(quiz.startTime);
+    const end = new Date(start.getTime() + quiz.duration * 60000);
+
+    // ⏳ Quiz has not started yet
+    if (now < start) {
+      return res.status(403).json({
+        message: "Quiz has not started yet",
+        startsIn: start - now,
+      });
+    }
+
+    // 🛑 Quiz time over → auto mark COMPLETED
+    if (now > end) {
+      if (quiz.status !== "COMPLETED") {
+        await quiz.update({ status: "COMPLETED" });
+      }
+
+      return res.status(403).json({
+        message: "Quiz has ended",
+        endedAt: end,
+      });
+    }
+
+    // 🔐 Passcode check
     const enteredPasscode = req.headers["x-passcode"];
     if (enteredPasscode !== quiz.passcode) {
       return res.status(403).json({ message: "Incorrect passcode" });
     }
 
-    // Convert SQL format → frontend format
+    // ✅ Convert SQL format → frontend format
     const formattedQuiz = {
       id: quiz.id,
       title: quiz.title,
-      duration: quiz.duration, // 👈 THIS LINE FIXES THE TIMER
+      duration: quiz.duration,
       questions: quiz.Questions.map((q) => ({
         question: q.text,
         options: q.Options.map((o) => o.text),
@@ -273,10 +342,11 @@ router.get("/:id", async (req, res) => {
 
     res.json(formattedQuiz);
   } catch (err) {
-    console.error(err);
+    console.error("FETCH QUIZ ERROR:", err);
     res.status(500).json({ message: "Failed to fetch quiz" });
   }
 });
+
 
 /*
 -----------------------------------
@@ -299,13 +369,36 @@ router.post("/submit/:id", auth, async (req, res) => {
       return res.status(404).json({ message: "Quiz not found" });
     }
 
-    let score = 0;
+    // ❌ Quiz not live
+    if (quiz.status !== "LIVE") {
+      return res.status(403).json({ message: "Quiz is not live" });
+    }
 
+    // ⏱ Time validation
+    const now = new Date();
+    const start = new Date(quiz.startTime);
+    const end = new Date(start.getTime() + quiz.duration * 60000);
+
+    // 🛑 Time over → mark COMPLETED
+    if (now > end) {
+      if (quiz.status !== "COMPLETED") {
+        await quiz.update({ status: "COMPLETED" });
+      }
+      return res.status(403).json({ message: "Quiz time is over" });
+    }
+
+    // ✅ Calculate score
+    let score = 0;
     quiz.Questions.forEach((question, index) => {
-      const correctIndex = question.Options.findIndex(opt => opt.isCorrect);
-      if (answers[index] === correctIndex) score++;
+      const correctIndex = question.Options.findIndex(
+        (opt) => opt.isCorrect
+      );
+      if (answers[index] === correctIndex) {
+        score++;
+      }
     });
 
+    // ✅ Save result
     await Result.create({
       score,
       name: req.user.name,
