@@ -87,7 +87,7 @@ fetch(`http://localhost:5000/api/quiz/${quizId}`, {
             <input type="radio" name="q${i}" value="${j}">
             ${opt}
           </label><br>
-        `
+        `,
           )
           .join("")}
       `;
@@ -132,7 +132,6 @@ function submitQuiz() {
       hasSubmitted = false;
     });
 }
-
 
 function startTimer(seconds) {
   timeLeft = seconds;

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -6,30 +6,59 @@
     <link rel="stylesheet" href="../css/style.css" />
   </head>
   <body>
-    <div class="container">
+    <div class="container create-quiz-container">
       <h1>Create Quiz</h1>
 
+      <!-- Quiz title -->
       <input id="title" type="text" placeholder="Quiz Title" />
 
-      <textarea
-        id="questions"
-        placeholder="Enter questions in JSON format (see example below)"
-      ></textarea>
+      <hr />
 
-      <small style="display: block; margin-top: 10px; color: #555">
-        Example format:
-        <pre style="background: #f1f5f9; padding: 10px; border-radius: 6px">
-[
-  {
-    "question": "2 + 2 = ?",
-    "options": ["1", "2", "3", "4"],
-    "correctAnswer": 3
-  }
-]
-      </pre
-        >
-      </small>
+      <!-- Question creator -->
+      <h3>Add Question</h3>
 
+      <input id="questionText" type="text" placeholder="Enter question" />
+
+      <input class="option" type="text" placeholder="Option 1" />
+      <input class="option" type="text" placeholder="Option 2" />
+      <input class="option" type="text" placeholder="Option 3" />
+      <input class="option" type="text" placeholder="Option 4" />
+
+      <h3>Correct Answer</h3>
+
+      <div class="correct-answer-row">
+        <div class="answer-col">
+          <span>Option 1</span>
+          <input type="radio" name="correct" value="0" />
+        </div>
+
+        <div class="answer-col">
+          <span>Option 2</span>
+          <input type="radio" name="correct" value="1" />
+        </div>
+
+        <div class="answer-col">
+          <span>Option 3</span>
+          <input type="radio" name="correct" value="2" />
+        </div>
+
+        <div class="answer-col">
+          <span>Option 4</span>
+          <input type="radio" name="correct" value="3" />
+        </div>
+      </div>
+
+      <button onclick="addQuestion()">Add Question</button>
+
+      <hr />
+
+      <!-- Preview -->
+      <h3>Added Questions</h3>
+      <div id="questionPreview"></div>
+
+      <hr />
+
+      <!-- Create quiz -->
       <button onclick="createQuiz()">Create Quiz</button>
 
       <p style="text-align: center; margin-top: 15px">

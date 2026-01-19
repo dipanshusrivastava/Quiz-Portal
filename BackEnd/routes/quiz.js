@@ -10,17 +10,14 @@ const {
 
 const router = express.Router();
 
-/*
------------------------------------
-GET all quizzes (titles only)
------------------------------------
-*/
-
 function isQuizExpired(quiz) {
   const start = new Date(quiz.startTime);
   const end = new Date(start.getTime() + quiz.duration * 60000);
   return new Date() > end;
 }
+
+// Host History Route
+
 router.get("/host-history/:id", auth, async (req, res) => {
   try {
     const quiz = await Quiz.findByPk(req.params.id);
@@ -45,7 +42,7 @@ router.get("/host-history/:id", auth, async (req, res) => {
   }
 });
 
-
+// Get All Quizzes Route
 
 router.get("/", async (req, res) => {
   try {
@@ -60,24 +57,8 @@ router.get("/", async (req, res) => {
   }
 });
 
-/*
------------------------------------
-CREATE QUIZ
------------------------------------
-Expected body:
-{
-  title: "Math Quiz",
-  passcode: "1234",
-  questions: [
-    {
-      question: "2 + 2 = ?",
-      options: ["1","2","3","4"],
-      correctAnswer: 3
-    }
-  ]
-}
------------------------------------
-*/
+// Create Quiz Route
+
 router.post("/create", auth, async (req, res) => {
   try {
     const { title, questions } = req.body;
@@ -122,7 +103,7 @@ router.post("/create", auth, async (req, res) => {
   }
 });
 
-// my quizzes
+// my quizzes Route
 router.get("/my-quizzes", auth, async (req, res) => {
   try {
     const quizzes = await Quiz.findAll({
@@ -186,8 +167,8 @@ router.get("/edit/:id", async (req, res) => {
   }
 });
 
-//
 // UPDATE QUIZ
+
 router.put("/:id", auth, async (req, res) => {
   try {
     const { title, questions } = req.body;
@@ -304,6 +285,8 @@ router.post("/host/:id", auth, async (req, res) => {
   }
 });
 
+// Preview Route
+
 router.get("/preview/:id", auth, async (req, res) => {
   try {
     const quiz = await Quiz.findByPk(req.params.id, {
@@ -337,7 +320,6 @@ router.get("/preview/:id", auth, async (req, res) => {
     res.status(500).json({ message: "Failed to load quiz preview" });
   }
 });
-
 
 // GET LEADERBOARD FOR A QUIZ
 router.get("/leaderboard/:id", auth, async (req, res) => {

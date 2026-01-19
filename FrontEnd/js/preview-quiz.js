@@ -38,9 +38,7 @@ fetch(`http://localhost:5000/api/quiz/preview/${quizId}`, {
               (opt, i) =>
                 `<li style="color:${
                   i === q.correctAnswer ? "green" : "#333"
-                }">${opt} ${
-                  i === q.correctAnswer ? "✔" : ""
-                }</li>`
+                }">${opt} ${i === q.correctAnswer ? "✔" : ""}</li>`,
             )
             .join("")}
         </ul>

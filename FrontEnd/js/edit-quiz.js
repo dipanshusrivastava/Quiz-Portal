@@ -19,7 +19,6 @@ fetch(`${API}/quiz/edit/${quizId}`, {
   })
   .catch(() => alert("Failed to load quiz"));
 
-
 // 🔹 Render questions with proper labels & layout
 function renderQuestions(questions) {
   questionsDiv.innerHTML = "";
@@ -71,7 +70,6 @@ function renderQuestions(questions) {
     questionsDiv.appendChild(card);
   });
 }
-
 
 // 🔹 Save updated quiz (NO CHANGE in logic)
 function saveQuiz() {

@@ -23,8 +23,8 @@ body {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
-.container-question{
-   max-width: 700px;
+.container-question {
+  max-width: 700px;
   margin: 80px auto;
   background: #ffffff;
   padding: 30px;
@@ -197,7 +197,6 @@ th {
   }
 }
 
-
 /* =========================
    EDIT QUIZ – QUESTION UI
    ========================= */
@@ -279,8 +278,7 @@ th {
 }
 
 /* Highlight correct option */
-.correct-label input[type="radio"]:checked
-  ~ .option {
+.correct-label input[type="radio"]:checked ~ .option {
   border-color: #22c55e;
 }
 
@@ -299,4 +297,193 @@ th {
   background-color: #ccc;
   color: #666;
   cursor: not-allowed;
+}
+
+/* ==================================================
+   CREATE QUIZ – FINAL PRODUCTION STYLES
+================================================== */
+
+.create-quiz-container {
+  max-width: 820px;
+  width: 92%;
+  margin: 32px auto;
+  padding: 26px 28px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+}
+
+/* Headings */
+.create-quiz-container h1 {
+  text-align: center;
+  margin-bottom: 22px;
+  font-size: 26px;
+  color: #0f172a;
+}
+
+.create-quiz-container h3 {
+  margin: 22px 0 10px;
+  font-size: 17px;
+  color: #1e293b;
+}
+
+/* Inputs */
+.create-quiz-container input[type="text"],
+.create-quiz-container input[type="number"],
+.create-quiz-container input[type="datetime-local"] {
+  width: 100%;
+  padding: 11px 13px;
+  font-size: 14.5px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  outline: none;
+  margin-bottom: 10px;
+  background: #ffffff;
+  transition:
+    border 0.2s,
+    box-shadow 0.2s;
+}
+
+.create-quiz-container .option {
+  background: #f8fafc;
+}
+
+.create-quiz-container input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+}
+
+/* Correct Answer Section */
+/* =====================================
+   CORRECT ANSWER – INLINE ROW LAYOUT
+===================================== */
+
+.correct-answer-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin: 12px 0 18px;
+  text-align: center;
+}
+
+.correct-answer-row .answer-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.correct-answer-row span {
+  font-size: 14px;
+  color: #334155;
+  font-weight: 500;
+}
+
+.correct-answer-row input[type="radio"] {
+  transform: scale(1.2);
+  accent-color: #2563eb;
+  cursor: pointer;
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .correct-answer-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+/* Buttons */
+.create-quiz-container button {
+  width: 100%;
+  padding: 12px;
+  font-size: 14.8px;
+  font-weight: 600;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    transform 0.12s;
+}
+
+/* Add Question */
+.create-quiz-container button:first-of-type {
+  background: #0ea5e9;
+  color: #ffffff;
+}
+
+.create-quiz-container button:first-of-type:hover {
+  background: #0284c7;
+  transform: translateY(-1px);
+}
+
+/* Create Quiz */
+.create-quiz-container button:last-of-type {
+  background: #22c55e;
+  color: #ffffff;
+  margin-top: 18px;
+}
+
+.create-quiz-container button:last-of-type:hover {
+  background: #16a34a;
+  transform: translateY(-1px);
+}
+
+/* Divider */
+.create-quiz-container hr {
+  border: none;
+  height: 1px;
+  background: #e2e8f0;
+  margin: 22px 0;
+}
+
+/* Question Preview */
+#questionPreview {
+  margin-top: 8px;
+}
+
+#questionPreview > div {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 13px 14px;
+  margin-bottom: 10px;
+}
+
+#questionPreview strong {
+  color: #0f172a;
+}
+
+#questionPreview em {
+  color: #2563eb;
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* Back link */
+.create-quiz-container a {
+  text-decoration: none;
+  color: #2563eb;
+  font-weight: 500;
+}
+
+.create-quiz-container a:hover {
+  text-decoration: underline;
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .create-quiz-container {
+    padding: 20px;
+  }
+
+  .correct-answer-group {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .create-quiz-container h1 {
+    font-size: 23px;
+  }
 }
