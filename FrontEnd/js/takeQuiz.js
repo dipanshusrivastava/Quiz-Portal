@@ -110,28 +110,29 @@ fetch(`http://localhost:5000/api/quiz/${quizId}`, {
 function submitQuiz() {
   if (hasSubmitted) return;
   hasSubmitted = true;
-  clearInterval(timerInterval); // stop timer
+  clearInterval(timerInterval);
+
+  const token = localStorage.getItem("token");
 
   fetch(`http://localhost:5000/api/quiz/submit/${quizId}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: token, // ✅ REQUIRED
     },
     body: JSON.stringify({ answers }),
   })
     .then((res) => res.json())
     .then((data) => {
       localStorage.setItem(`attempted_${quizId}`, "true");
-      // alert(`Quiz submitted! Your score: ${data.score}`);
-      window.location.replace(
-        "/exam-portal-platform/FrontEnd/pages/leaderboard.html?id=" + quizId
-      );
+      window.location.href = "./leaderboard.html?id=" + quizId;
     })
     .catch((err) => {
       console.error(err);
-      hasSubmitted = false; // allow retry if error
+      hasSubmitted = false;
     });
 }
+
 
 function startTimer(seconds) {
   timeLeft = seconds;

@@ -6,6 +6,14 @@ const Result = sequelize.define("Result", {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 });
 
 module.exports = Result;

@@ -4,7 +4,6 @@ const { Quiz, Question, Option, Result } = require("../models");
 
 const router = express.Router();
 
-
 /*
 -----------------------------------
 GET all quizzes (titles only)
@@ -45,12 +44,11 @@ router.post("/create", auth, async (req, res) => {
   try {
     const { title, questions } = req.body;
 
-    console.log("REQ BODY:", req.body);
-    console.log("CREATOR ID:", req.user.id);
-
     // ❌ Validation
     if (!title || !questions || !questions.length) {
-      return res.status(400).json({ message: "Title and questions are required" });
+      return res
+        .status(400)
+        .json({ message: "Title and questions are required" });
     }
 
     // ✅ Create quiz (DRAFT)
@@ -100,7 +98,6 @@ router.get("/my-quizzes", auth, async (req, res) => {
   }
 });
 
-// edit quiz
 // GET QUIZ FOR EDIT (NO PASSCODE)
 router.get("/edit/:id", async (req, res) => {
   try {
@@ -130,8 +127,7 @@ router.get("/edit/:id", async (req, res) => {
   }
 });
 
-
-// 
+//
 // UPDATE QUIZ
 router.put("/:id", async (req, res) => {
   try {
@@ -179,9 +175,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-
-
-//  hosting 
+//  hosting
 router.post("/host/:id", auth, async (req, res) => {
   const quiz = await Quiz.findByPk(req.params.id);
 
@@ -203,9 +197,8 @@ router.post("/host/:id", auth, async (req, res) => {
   res.json({ message: "Quiz hosted" });
 });
 
-
 // GET LEADERBOARD FOR A QUIZ
-router.get("/leaderboard/:id", async (req, res) => {
+router.get("/leaderboard/:id", auth, async (req, res) => {
   try {
     const quizId = req.params.id;
 
@@ -218,6 +211,7 @@ router.get("/leaderboard/:id", async (req, res) => {
     const leaderboard = results.map((r, index) => ({
       rank: index + 1,
       name: r.name || "Anonymous",
+      email: r.email || "-",
       score: r.score,
     }));
 
@@ -245,7 +239,7 @@ router.get("/:id", async (req, res) => {
     if (!quiz) {
       return res.status(404).json({ message: "Quiz not found" });
     }
-    
+
     // startTime
     if (quiz.startTime) {
       const now = new Date();
@@ -289,8 +283,7 @@ router.get("/:id", async (req, res) => {
 SUBMIT QUIZ
 -----------------------------------
 */
-router.post("/submit/:id", async (req, res) => {
-  console.log("Submit route hit"); // 👈 add this temporarily
+router.post("/submit/:id", auth, async (req, res) => {
   try {
     const quizId = req.params.id;
     const { answers } = req.body;
@@ -309,21 +302,20 @@ router.post("/submit/:id", async (req, res) => {
     let score = 0;
 
     quiz.Questions.forEach((question, index) => {
-      const correctIndex = question.Options.findIndex((opt) => opt.isCorrect);
-      if (answers[index] === correctIndex) {
-        score++;
-      }
+      const correctIndex = question.Options.findIndex(opt => opt.isCorrect);
+      if (answers[index] === correctIndex) score++;
     });
 
-    // Save result (optional but good)
     await Result.create({
       score,
+      name: req.user.name,
+      email: req.user.email,
       QuizId: quiz.id,
     });
 
     res.json({ score });
   } catch (err) {
-    console.error(err);
+    console.error("SUBMIT ERROR:", err);
     res.status(500).json({ message: "Failed to submit quiz" });
   }
 });

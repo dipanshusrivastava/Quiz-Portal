@@ -17,6 +17,6 @@ function host() {
   .then(res => res.json())
   .then(() => {
     alert("Quiz is now LIVE");
-    window.location.href = "dashboard.html";
+    window.location.href = "./dashboard.html";
   });
 }

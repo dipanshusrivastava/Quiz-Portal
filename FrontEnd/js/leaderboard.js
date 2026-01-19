@@ -7,28 +7,32 @@ if (!quizId) {
   tableBody.innerHTML = "<tr><td colspan='3'>Invalid quiz ID</td></tr>";
 } else {
   fetch(`http://localhost:5000/api/quiz/leaderboard/${quizId}`)
-    .then(res => res.json())
-    .then(data => {
+    .then((res) => res.json())
+    .then((data) => {
       console.log("Leaderboard data:", data); // 🔍 check console
 
       if (!Array.isArray(data) || data.length === 0) {
-        tableBody.innerHTML = "<tr><td colspan='3'>No results yet</td></tr>";
+        tableBody.innerHTML = "<tr><td colspan='4'>No results yet</td></tr>";
         return;
       }
 
-      tableBody.innerHTML = "";
-      data.forEach(row => {
+      // tableBody.innerHTML = "<tr><td colspan='4'>No results yet</td></tr>";
+
+      data.forEach((row) => {
         const tr = document.createElement("tr");
         tr.innerHTML = `
-          <td>${row.rank}</td>
-          <td>${row.name}</td>
-          <td>${row.score}</td>
-        `;
+            <td>${row.rank}</td>
+                <td>${row.name}</td>
+                    <td>${row.email}</td>
+                        <td>${row.score}</td>
+                                              `;
+
         tableBody.appendChild(tr);
       });
     })
-    .catch(err => {
+    .catch((err) => {
       console.error(err);
-      tableBody.innerHTML = "<tr><td colspan='3'>Unable to load leaderboard</td></tr>";
+      tableBody.innerHTML =
+        "<tr><td colspan='3'>Unable to load leaderboard</td></tr>";
     });
 }
