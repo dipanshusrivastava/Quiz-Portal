@@ -5,6 +5,7 @@ const Quiz = require("./Quiz");
 const Question = require("./Question");
 const Option = require("./Option");
 const Result = require("./Result");
+const QuizHostHistory = require("./QuizHostHistory");
 
 // Relationships
 Quiz.hasMany(Question, { onDelete: "CASCADE" });
@@ -19,6 +20,9 @@ Result.belongsTo(User);
 Quiz.hasMany(Result);
 Result.belongsTo(Quiz);
 
+Quiz.hasMany(QuizHostHistory);
+QuizHostHistory.belongsTo(Quiz);
+
 module.exports = {
   sequelize,
   User,
@@ -26,4 +30,5 @@ module.exports = {
   Question,
   Option,
   Result,
+  QuizHostHistory,
 };

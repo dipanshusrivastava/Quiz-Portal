@@ -16,7 +16,7 @@ app.use("/api/quiz", require("./routes/quiz"));
 
 // Sync database first, then start server
 sequelize
-  .sync()
+  .sync({ alter: true })
   .then(() => {
     console.log("SQLite database connected");
 

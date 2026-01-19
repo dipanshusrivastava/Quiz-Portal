@@ -1,6 +1,12 @@
 const express = require("express");
 const auth = require("../middleware/auth");
-const { Quiz, Question, Option, Result } = require("../models");
+const {
+  Quiz,
+  Question,
+  Option,
+  Result,
+  QuizHostHistory,
+} = require("../models");
 
 const router = express.Router();
 
@@ -15,6 +21,31 @@ function isQuizExpired(quiz) {
   const end = new Date(start.getTime() + quiz.duration * 60000);
   return new Date() > end;
 }
+router.get("/host-history/:id", auth, async (req, res) => {
+  try {
+    const quiz = await Quiz.findByPk(req.params.id);
+
+    if (!quiz) {
+      return res.status(404).json({ message: "Quiz not found" });
+    }
+
+    if (quiz.creatorId !== req.user.id) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
+    const history = await QuizHostHistory.findAll({
+      where: { QuizId: quiz.id },
+      order: [["hostedAt", "DESC"]],
+    });
+
+    res.json(history);
+  } catch (err) {
+    console.error("HOST HISTORY ERROR:", err);
+    res.status(500).json({ message: "Failed to load host history" });
+  }
+});
+
+
 
 router.get("/", async (req, res) => {
   try {
@@ -103,11 +134,7 @@ router.get("/my-quizzes", auth, async (req, res) => {
 
     // 🔄 Auto-update status if quiz time is over
     for (const quiz of quizzes) {
-      if (
-        quiz.status === "LIVE" &&
-        quiz.startTime &&
-        quiz.duration
-      ) {
+      if (quiz.status === "LIVE" && quiz.startTime && quiz.duration) {
         const start = new Date(quiz.startTime);
         const end = new Date(start.getTime() + quiz.duration * 60000);
 
@@ -129,7 +156,6 @@ router.get("/my-quizzes", auth, async (req, res) => {
     res.status(500).json({ message: "Failed to load quizzes" });
   }
 });
-
 
 // GET QUIZ FOR EDIT (NO PASSCODE)
 router.get("/edit/:id", async (req, res) => {
@@ -177,7 +203,9 @@ router.put("/:id", auth, async (req, res) => {
 
     // 🔒 Ownership check
     if (quiz.creatorId !== req.user.id) {
-      return res.status(403).json({ message: "Not authorized to edit this quiz" });
+      return res
+        .status(403)
+        .json({ message: "Not authorized to edit this quiz" });
     }
 
     // ❌ Block editing while quiz is LIVE
@@ -227,28 +255,89 @@ router.put("/:id", auth, async (req, res) => {
   }
 });
 
-
 //  hosting
 router.post("/host/:id", auth, async (req, res) => {
-  const quiz = await Quiz.findByPk(req.params.id);
+  try {
+    // ✅ STEP 1: destructure from req.body
+    const { passcode, duration, startTime } = req.body;
 
-  if (!quiz) {
-    return res.status(404).json({ message: "Quiz not found" });
+    if (!passcode || !duration || !startTime) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    const quiz = await Quiz.findByPk(req.params.id);
+
+    if (!quiz) {
+      return res.status(404).json({ message: "Quiz not found" });
+    }
+
+    // 🔒 Ownership check
+    if (quiz.creatorId !== req.user.id) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
+    // ❌ Prevent re-hosting LIVE quiz
+    if (quiz.status === "LIVE") {
+      return res.status(403).json({ message: "Quiz is already live" });
+    }
+
+    // ✅ Update quiz
+    await quiz.update({
+      passcode,
+      duration,
+      startTime,
+      status: "LIVE",
+    });
+
+    // ✅ Save hosting history
+    await QuizHostHistory.create({
+      passcode,
+      duration,
+      startTime,
+      QuizId: quiz.id,
+    });
+
+    res.json({ message: "Quiz hosted successfully" });
+  } catch (err) {
+    console.error("HOST QUIZ ERROR:", err);
+    res.status(500).json({ message: "Failed to host quiz" });
   }
-
-  if (quiz.creatorId !== req.user.id) {
-    return res.status(403).json({ message: "Not authorized" });
-  }
-
-  await quiz.update({
-    passcode: req.body.passcode,
-    duration: req.body.duration,
-    startTime: req.body.startTime,
-    status: "LIVE",
-  });
-
-  res.json({ message: "Quiz hosted" });
 });
+
+router.get("/preview/:id", auth, async (req, res) => {
+  try {
+    const quiz = await Quiz.findByPk(req.params.id, {
+      include: {
+        model: Question,
+        include: Option,
+      },
+    });
+
+    if (!quiz) {
+      return res.status(404).json({ message: "Quiz not found" });
+    }
+
+    // 🔒 Creator-only preview
+    if (quiz.creatorId !== req.user.id) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
+    // ✅ Send quiz WITHOUT restrictions
+    res.json({
+      id: quiz.id,
+      title: quiz.title,
+      questions: quiz.Questions.map((q) => ({
+        question: q.text,
+        options: q.Options.map((o) => o.text),
+        correctAnswer: q.Options.findIndex((o) => o.isCorrect),
+      })),
+    });
+  } catch (err) {
+    console.error("PREVIEW QUIZ ERROR:", err);
+    res.status(500).json({ message: "Failed to load quiz preview" });
+  }
+});
+
 
 // GET LEADERBOARD FOR A QUIZ
 router.get("/leaderboard/:id", auth, async (req, res) => {
@@ -347,7 +436,6 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-
 /*
 -----------------------------------
 SUBMIT QUIZ
@@ -390,9 +478,7 @@ router.post("/submit/:id", auth, async (req, res) => {
     // ✅ Calculate score
     let score = 0;
     quiz.Questions.forEach((question, index) => {
-      const correctIndex = question.Options.findIndex(
-        (opt) => opt.isCorrect
-      );
+      const correctIndex = question.Options.findIndex((opt) => opt.isCorrect);
       if (answers[index] === correctIndex) {
         score++;
       }
