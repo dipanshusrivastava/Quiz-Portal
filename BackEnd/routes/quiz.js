@@ -66,7 +66,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-
 // Create Quiz Route
 
 router.post("/create", auth, async (req, res) => {
@@ -357,7 +356,10 @@ router.get("/leaderboard/:id", auth, async (req, res) => {
     // Fetch results
     const results = await Result.findAll({
       where: { QuizId: quizId },
-      order: [["score", "DESC"]],
+      order: [
+        ["score", "DESC"], // 1️⃣ Higher score first
+        ["submittedAt", "ASC"], // 2️⃣ Earlier submission wins tie
+      ],
     });
 
     const leaderboard = results.map((r, index) => ({
@@ -365,6 +367,7 @@ router.get("/leaderboard/:id", auth, async (req, res) => {
       name: r.name || "Anonymous",
       email: r.email || "-",
       score: r.score,
+      submittedAt: r.submittedAt,
     }));
 
     res.json(leaderboard);
@@ -373,7 +376,6 @@ router.get("/leaderboard/:id", auth, async (req, res) => {
     res.status(500).json({ message: "Failed to load leaderboard" });
   }
 });
-
 
 /*
 -----------------------------------

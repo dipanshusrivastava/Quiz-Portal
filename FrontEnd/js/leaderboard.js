@@ -17,7 +17,7 @@ if (!quizId) {
       console.log("Leaderboard data:", data); // 🔍 check console
 
       if (!Array.isArray(data) || data.length === 0) {
-        tableBody.innerHTML = "<tr><td colspan='4'>No results yet</td></tr>";
+        tableBody.innerHTML = "<tr><td colspan='5'>No results yet</td></tr>";
         return;
       }
 
@@ -30,6 +30,7 @@ if (!quizId) {
                 <td>${row.name}</td>
                     <td>${row.email}</td>
                         <td>${row.score}</td>
+                         <td>${row.submittedAt}</td>
                                               `;
 
         tableBody.appendChild(tr);

@@ -12,7 +12,6 @@ app.use(express.json());
 
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/quiz", require("./routes/quiz"));
-// app.use("/api/result", require("./routes/result"));
 
 // Sync database first, then start server
 sequelize

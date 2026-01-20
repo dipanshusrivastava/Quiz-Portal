@@ -7,7 +7,8 @@
 
 /* BASE */
 body {
-  font-family: "Segoe UI", Tahoma, sans-serif;
+  background-color: #f4f6f9;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: #f5f7fa;
   color: #333;
   min-height: 100vh;
@@ -486,4 +487,85 @@ th {
   .create-quiz-container h1 {
     font-size: 23px;
   }
+}
+.leaderboard-container {
+  max-width: 900px;
+  margin: 60px auto;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Title */
+.leaderboard-container h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 28px;
+  color: #1f2937;
+}
+
+/* ===== Table ===== */
+
+.leaderboard-container #leaderboardTable {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* HEADER */
+.leaderboard-container #leaderboardTable thead {
+  background-color: #17ad1e !important;
+}
+
+.leaderboard-container #leaderboardTable thead th {
+  color: #0f0101 !important;
+  padding: 14px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  border-bottom: none;
+}
+
+/* BODY ROWS */
+.leaderboard-container #leaderboardTable tbody tr {
+  background-color: #ffffff;
+  transition: background-color 0.2s ease;
+}
+
+.leaderboard-container #leaderboardTable tbody tr:nth-child(even) {
+  background-color: #f1f5f9;
+}
+
+.leaderboard-container #leaderboardTable tbody tr:hover {
+  background-color: #e0e7ff;
+}
+
+/* CELLS */
+.leaderboard-container #leaderboardTable td {
+  padding: 14px;
+  font-size: 14px;
+  color: #070b10;
+  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* RANK COLUMN */
+.leaderboard-container #leaderboardTable td:first-child {
+  font-weight: 700;
+  color: #111827;
+}
+
+/* TOP 3 COLORS */
+.leaderboard-container #leaderboardTable tbody tr:nth-child(1) td:first-child {
+  color: #f59e0b !important; /* Gold */
+}
+
+.leaderboard-container #leaderboardTable tbody tr:nth-child(2) td:first-child {
+  color: #9ca3af !important; /* Silver */
+}
+
+.leaderboard-container #leaderboardTable tbody tr:nth-child(3) td:first-child {
+  color: #b45309 !important; /* Bronze */
 }

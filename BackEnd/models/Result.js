@@ -14,6 +14,11 @@ const Result = sequelize.define("Result", {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  submittedAt: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: DataTypes.NOW,
+  },
 });
 
 module.exports = Result;
