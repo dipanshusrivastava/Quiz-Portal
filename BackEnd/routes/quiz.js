@@ -45,18 +45,27 @@ router.get("/host-history/:id", auth, async (req, res) => {
 
 // Get All Quizzes Route
 
+const { Op } = require("sequelize");
+
 router.get("/", async (req, res) => {
   try {
+    const now = new Date();
+
     const quizzes = await Quiz.findAll({
-      attributes: ["id", "title", "startTime"],
+      where: {
+        status: "LIVE", // ✅ only LIVE quizzes
+      },
+      attributes: ["id", "title", "startTime", "status"],
+      order: [["startTime", "ASC"]],
     });
 
     res.json(quizzes);
   } catch (err) {
-    console.error(err);
+    console.error("FETCH QUIZZES ERROR:", err);
     res.status(500).json({ message: "Failed to fetch quizzes" });
   }
 });
+
 
 // Create Quiz Route
 
@@ -327,12 +336,30 @@ router.get("/leaderboard/:id", auth, async (req, res) => {
   try {
     const quizId = req.params.id;
 
+    const quiz = await Quiz.findByPk(quizId);
+    if (!quiz) {
+      return res.status(404).json({ message: "Quiz not found" });
+    }
+
+    // CREATOR rules
+    if (req.user.role === "CREATOR") {
+      if (quiz.creatorId !== req.user.id) {
+        return res.status(403).json({ message: "Not authorized" });
+      }
+
+      if (quiz.status !== "COMPLETED") {
+        return res.status(403).json({
+          message: "Results are available only after quiz completion",
+        });
+      }
+    }
+
+    // Fetch results
     const results = await Result.findAll({
       where: { QuizId: quizId },
       order: [["score", "DESC"]],
     });
 
-    // Add rank manually
     const leaderboard = results.map((r, index) => ({
       rank: index + 1,
       name: r.name || "Anonymous",
@@ -342,10 +369,11 @@ router.get("/leaderboard/:id", auth, async (req, res) => {
 
     res.json(leaderboard);
   } catch (err) {
-    console.error(err);
+    console.error("LEADERBOARD ERROR:", err);
     res.status(500).json({ message: "Failed to load leaderboard" });
   }
 });
+
 
 /*
 -----------------------------------

@@ -97,14 +97,22 @@
       <h4>${quiz.title}</h4>
       <p class="status">Status: ${quiz.status}</p>
 
-      <div class="quiz-actions">
-        ${
-          quiz.status !== "LIVE"
-            ? `<button onclick="editQuiz(${quiz.id})">Edit Quiz</button>`
-            : ``
-        }
-        <button onclick="hostQuiz(${quiz.id})">Host Quiz</button>
-      </div>
+    <div class="quiz-actions">
+  ${
+    quiz.status !== "LIVE"
+      ? `<button onclick="editQuiz(${quiz.id})">Edit Quiz</button>`
+      : ``
+  }
+
+  <button onclick="hostQuiz(${quiz.id})">Host Quiz</button>
+
+  ${
+    quiz.status === "COMPLETED"
+      ? `<button onclick="viewResult(${quiz.id})">Result</button>`
+      : ``
+  }
+</div>
+
     </div>
   `;
             });
@@ -132,6 +140,10 @@
 
       function editBlocked() {
         alert("You cannot edit the quiz right now because it is LIVE.");
+      }
+
+      function viewResult(id) {
+        window.location.href = `leaderboard.html?id=${id}`;
       }
     </script>
   </body>
