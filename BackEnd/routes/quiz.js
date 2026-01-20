@@ -6,6 +6,7 @@ const {
   Option,
   Result,
   QuizHostHistory,
+  User,
 } = require("../models");
 
 const router = express.Router();
@@ -425,6 +426,9 @@ SUBMIT QUIZ
 */
 router.post("/submit/:id", auth, async (req, res) => {
   try {
+    // console.log("✅ SUBMIT ROUTE HIT");
+    // console.log("REQ.USER =", req.user);
+
     const quizId = req.params.id;
     const { answers } = req.body;
 

@@ -1,12 +1,17 @@
 const params = new URLSearchParams(window.location.search);
 const quizId = params.get("id");
+const token = localStorage.getItem("token");
 
 const tableBody = document.querySelector("#leaderboardTable tbody");
 
 if (!quizId) {
   tableBody.innerHTML = "<tr><td colspan='3'>Invalid quiz ID</td></tr>";
 } else {
-  fetch(`http://localhost:5000/api/quiz/leaderboard/${quizId}`)
+  fetch(`http://localhost:5000/api/quiz/leaderboard/${quizId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`, // ✅ REQUIRED
+    },
+  })
     .then((res) => res.json())
     .then((data) => {
       console.log("Leaderboard data:", data); // 🔍 check console

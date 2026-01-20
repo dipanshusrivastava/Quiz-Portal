@@ -1,15 +1,18 @@
+const token = localStorage.getItem("token");
 const params = new URLSearchParams(window.location.search);
 const quizId = params.get("id");
+
+
+
 if (localStorage.getItem(`attempted_${quizId}`)) {
   alert("You have already attempted this quiz.");
   window.location.href = "./available-quizzes.html";
 }
 const quizPasscode = sessionStorage.getItem("quizPasscode"); // from prompt
-
 const quizTitle = document.getElementById("quizTitle");
 const quizForm = document.getElementById("quizForm");
-let hasSubmitted = false;
 
+let hasSubmitted = false;
 let timerInterval;
 let timeLeft = 0;
 
@@ -118,7 +121,7 @@ function submitQuiz() {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: token, // ✅ REQUIRED
+       Authorization: `Bearer ${token}`, // ✅ REQUIRED
     },
     body: JSON.stringify({ answers }),
   })
