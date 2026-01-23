@@ -2,13 +2,25 @@ const token = localStorage.getItem("token");
 const params = new URLSearchParams(window.location.search);
 const quizId = params.get("id");
 
+function getUserIdFromToken() {
+  const token = localStorage.getItem("token");
+  if (!token) return null;
 
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    return payload.id;
+  } catch {
+    return null;
+  }
+}
 
-if (localStorage.getItem(`attempted_${quizId}`)) {
+const userId = getUserIdFromToken();
+
+if (localStorage.getItem(`attempted_${quizId}_user_${userId}`)) {
   alert("You have already attempted this quiz.");
   window.location.href = "./available-quizzes.html";
 }
-const quizPasscode = sessionStorage.getItem("quizPasscode"); // from prompt
+const quizPasscode = sessionStorage.getItem("quizPasscode");
 const quizTitle = document.getElementById("quizTitle");
 const quizForm = document.getElementById("quizForm");
 
@@ -22,27 +34,6 @@ if (!quizId) {
   alert("Invalid quiz link");
   window.location.href = "./available-quizzes.html";
 }
-
-// function showEarlyMessage(ms) {
-//   const timerDiv = document.getElementById("timer");
-
-//   let remaining = Math.floor(ms / 1000);
-
-//   const interval = setInterval(() => {
-//     const h = Math.floor(remaining / 3600);
-//     const m = Math.floor((remaining % 3600) / 60);
-//     const s = remaining % 60;
-
-//     timerDiv.innerText = `Test will start in ${h}h ${m}m ${s}s`;
-
-//     if (remaining <= 0) {
-//       clearInterval(interval);
-//       location.reload(); // reload and quiz will open
-//     }
-
-//     remaining--;
-//   }, 1000);
-// }
 
 // Fetch quiz
 fetch(`http://localhost:5000/api/quiz/${quizId}`, {
@@ -121,13 +112,13 @@ function submitQuiz() {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-       Authorization: `Bearer ${token}`, // ✅ REQUIRED
+      Authorization: `Bearer ${token}`, // ✅ REQUIRED
     },
     body: JSON.stringify({ answers }),
   })
     .then((res) => res.json())
     .then((data) => {
-      localStorage.setItem(`attempted_${quizId}`, "true");
+      localStorage.setItem(`attempted_${quizId}_user_${userId}`, "true");
       window.location.href = "./leaderboard.html?id=" + quizId;
     })
     .catch((err) => {

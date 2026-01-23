@@ -11,6 +11,8 @@ const {
 
 const router = express.Router();
 
+// Checking if quiz time is over or not
+
 function isQuizExpired(quiz) {
   const start = new Date(quiz.startTime);
   const end = new Date(start.getTime() + quiz.duration * 60000);
@@ -456,9 +458,7 @@ SUBMIT QUIZ
 */
 router.post("/submit/:id", auth, async (req, res) => {
   try {
-    // console.log("✅ SUBMIT ROUTE HIT");
-    // console.log("REQ.USER =", req.user);
-
+    
     const quizId = req.params.id;
     const { answers } = req.body;
 
