@@ -1,10 +1,15 @@
+// Problems
+-Options are shuffled in quiz 
+-auto submit issue
 -When i am editing the quiz then i can't add the questions only i can edit the questions i have to fix this 
 -right now on SignUp email is valid or not its not checking ?
 -After quiz submission directly leaderboard is opening but i have to make open a thankYou page only
--Forget password/Reset Password
+-Forget password/Reset Password(Done)
 -Points per questions
 
-
-// Problems
-- Options are shuffled in quiz 
-- auto submit issue
+// I have to implement
+-Profile – only profile detail i have is email
+-Help/ Support feature
+-Points per question
+-Feedback
+-Export Result

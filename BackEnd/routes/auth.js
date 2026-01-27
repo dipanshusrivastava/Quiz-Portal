@@ -7,7 +7,6 @@ const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const { Op } = require("sequelize");
 
-
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -16,27 +15,49 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-
 // SIGNUP
 router.post("/signup", async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
 
+    // 1️⃣ Required fields check
+    if (!name || !email || !password || !role) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    // 2️⃣ Level-1 Email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res
+        .status(400)
+        .json({ message: "Please enter a valid email address" });
+    }
+
+    // 3️⃣ Password length validation (recommended)
+    if (password.length < 6) {
+      return res
+        .status(400)
+        .json({ message: "Password must be at least 6 characters" });
+    }
+
+    // 4️⃣ Check if user already exists
     const existing = await User.findOne({ where: { email } });
     if (existing) {
       return res.status(400).json({ message: "User already exists" });
     }
 
+    // 5️⃣ Hash password
     const hashed = await bcrypt.hash(password, 10);
 
-    const user = await User.create({
+    // 6️⃣ Create user
+    await User.create({
       name,
       email,
       password: hashed,
       role,
     });
 
-    res.json({ message: "User created" });
+    res.json({ message: "User created successfully" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Signup failed" });
@@ -86,7 +107,7 @@ router.post("/forgot-password", async (req, res) => {
     user.resetTokenExpiry = new Date(Date.now() + 15 * 60 * 1000);
     await user.save();
 
-   const resetLink = `http://localhost:5000/pages/reset-password.html?token=${token}`;
+    const resetLink = `http://localhost:5000/pages/reset-password.html?token=${token}`;
 
     // 📧 👉 SEND EMAIL HERE (EXACT PLACE)
     await transporter.sendMail({
@@ -106,7 +127,6 @@ router.post("/forgot-password", async (req, res) => {
 
     // ✅ AFTER email is sent
     res.json({ message: "Password reset link sent" });
-
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Something went wrong" });
@@ -140,6 +160,5 @@ router.post("/reset-password", async (req, res) => {
     res.status(500).json({ message: "Reset failed" });
   }
 });
-
 
 module.exports = router;
