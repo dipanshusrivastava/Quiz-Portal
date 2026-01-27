@@ -3,3 +3,8 @@
 -After quiz submission directly leaderboard is opening but i have to make open a thankYou page only
 -Forget password/Reset Password
 -Points per questions
+
+
+// Problems
+- Options are shuffled in quiz 
+- auto submit issue

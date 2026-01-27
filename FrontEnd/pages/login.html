@@ -1,28 +1,30 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Login | Exam Portal</title>
-  <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login | Exam Portal</title>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Login</h1>
 
-  <div class="container">
-    <h1>Login</h1>
+      <input id="email" type="email" placeholder="Email Address" />
 
-    <input id="email" type="email" placeholder="Email Address" />
+      <input id="password" type="password" placeholder="Password" />
 
-    <input id="password" type="password" placeholder="Password" />
+      <p style="text-align: right; margin: 5px 0 15px">
+        <a href="./forgot-password.html">Forgot password?</a>
+      </p>
 
-    <button onclick="login()">Login</button>
+      <button onclick="login()">Login</button>
 
-    <p style="text-align:center; margin-top:15px;">
-      Don’t have an account?
-      <a href="./signup.html">Signup</a>
-    </p>
-  </div>
+      <p style="text-align: center; margin-top: 15px">
+        Don’t have an account?
+        <a href="./signup.html">Signup</a>
+      </p>
+    </div>
 
-  <script src="../js/auth.js"></script>
-
-</body>
+    <script src="../js/auth.js"></script>
+  </body>
 </html>
