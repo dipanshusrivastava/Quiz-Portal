@@ -49,7 +49,7 @@ function loadHostHistory() {
 
       history.forEach((h) => {
         list.innerHTML += `
-          <div class="quiz-card">
+          <div class="host-history-card">
             <p><b>Passcode:</b> ${h.passcode}</p>
             <p><b>Duration:</b> ${h.duration} minutes</p>
             <p><b>Start Time:</b> ${new Date(h.startTime).toLocaleString()}</p>
