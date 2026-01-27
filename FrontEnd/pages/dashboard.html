@@ -4,29 +4,10 @@
     <meta charset="UTF-8" />
     <title>Dashboard | Exam Portal</title>
     <link rel="stylesheet" href="../css/style.css" />
-    <style>
-      .quiz-card {
-        background: #ffffff;
-        padding: 16px;
-        border-radius: 8px;
-        margin-bottom: 12px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      }
-
-      .quiz-actions button {
-        margin-right: 10px;
-      }
-
-      .status {
-        font-size: 13px;
-        font-weight: bold;
-        color: #555;
-      }
-    </style>
   </head>
   <body>
     <div class="dashboard">
-      <h1>Dashboard</h1>
+      <h1>🎓Exam Portal</h1>
       <p class="role-text" id="roleText"></p>
 
       <!-- CREATOR SECTION -->
@@ -38,7 +19,7 @@
           <button>Create New Quiz</button>
         </a>
 
-        <h3 style="margin-top: 20px">Your Quizzes</h3>
+        <h3 style="margin-top: 20px; margin-bottom: 10px">Your Quizzes</h3>
         <div id="quizList"></div>
       </div>
 
@@ -94,21 +75,23 @@
             quizzes.forEach((quiz) => {
               quizList.innerHTML += `
     <div class="quiz-card">
-      <h4>${quiz.title}</h4>
-      <p class="status">Status: ${quiz.status}</p>
+      <div class="quiz-info">
+    <h4>${quiz.title}</h4>
+    <p class="status">Status: ${quiz.status}</p>
+  </div>
 
     <div class="quiz-actions">
   ${
     quiz.status !== "LIVE"
-      ? `<button onclick="editQuiz(${quiz.id})">Edit Quiz</button>`
+      ? `<button onclick="editQuiz(${quiz.id})">✏️Edit Quiz</button>`
       : ``
   }
 
-  <button onclick="hostQuiz(${quiz.id})">Host Quiz</button>
+  <button onclick="hostQuiz(${quiz.id})">▶️Host Quiz</button>
 
   ${
     quiz.status === "COMPLETED"
-      ? `<button onclick="viewResult(${quiz.id})">Result</button>`
+      ? `<button onclick="viewResult(${quiz.id})">📊Result</button>`
       : ``
   }
 </div>

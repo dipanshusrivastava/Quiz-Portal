@@ -103,7 +103,9 @@ button {
   cursor: pointer;
   color: #fff;
   background: linear-gradient(135deg, var(--primary), #6366f1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 button:hover {
@@ -129,7 +131,7 @@ a:hover {
 /* ================= DASHBOARD ================= */
 .dashboard {
   max-width: 760px;
-  margin: 70px auto;
+  margin: 30px auto;
   padding: 10px;
 }
 
@@ -152,6 +154,7 @@ a:hover {
   font-size: 14px;
   color: var(--muted);
   margin-bottom: 25px;
+  margin-left: 30px;
 }
 
 /* ================= QUIZ LIST ================= */
@@ -247,7 +250,6 @@ tr:nth-child(even) {
     font-size: 1.6rem;
   }
 }
-
 
 /* =========================
    EDIT QUIZ – QUESTION UI
@@ -403,6 +405,46 @@ tr:nth-child(even) {
 .create-quiz-container input:focus {
   border-color: #2563eb;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+}
+.quiz-card {
+  display: flex;
+  justify-content: space-between; /* left vs right */
+  align-items: center;
+  background: #ffffff;
+  padding: 0px 16px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Left side: title + status */
+.quiz-info h4 {
+  margin: 0;
+}
+
+.quiz-info .status {
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #555;
+}
+
+/* Right side: buttons */
+.quiz-actions {
+ display: flex;
+ padding-bottom: 20px;
+  gap: 10px; /* space between buttons */
+  margin-top: 10px;
+  flex-wrap: wrap; /* optional: wraps on small screens */
+}
+
+.quiz-actions button {
+  padding: 9px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  width: auto; /* 🔥 IMPORTANT: prevents full-width */
+  white-space: nowrap; /* prevents text breaking */
+  cursor: pointer;
 }
 
 /* Correct Answer Section */
@@ -621,15 +663,13 @@ tr:nth-child(even) {
   color: #b45309 !important; /* Bronze */
 }
 
-
-
 /* ============ NAVBAR ============ */
 .navbar {
   display: flex;
   justify-content: space-between;
   padding: 18px 40px;
   background: #fff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .logo {
@@ -639,15 +679,15 @@ tr:nth-child(even) {
 
 .nav-links a {
   margin-left: 20px;
-  font-size: 14px;
+  font-size: 16px;
   color: #374151;
 }
 
 /* ============ HERO FIXED CENTER LAYOUT ============ */
 .hero {
   display: flex;
-  flex-direction: row;   /* stack items */
-  align-items: center;      /* center horizontally */
+  flex-direction: row; /* stack items */
+  align-items: center; /* center horizontally */
   justify-content: center;
   text-align: center;
   padding: 80px 20px 60px;
@@ -686,7 +726,6 @@ tr:nth-child(even) {
   width: 200px;
   height: 200px;
   border-radius: 25px;
-  
 }
 
 /* ============ FEATURES ============ */
@@ -706,7 +745,7 @@ tr:nth-child(even) {
   background: #fff;
   padding: 20px;
   border-radius: 14px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.07);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
 }
 
 /* ============ STATS ============ */
@@ -736,7 +775,7 @@ tr:nth-child(even) {
   background: #fff;
   padding: 20px;
   border-radius: 14px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.07);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
 }
 
 /* ============ FOOTER ============ */
@@ -763,3 +802,62 @@ tr:nth-child(even) {
     gap: 10px;
   }
 }
+
+/* ===== REVIEWS SECTION ===== */
+.reviews {
+  padding: 80px 40px;
+  background: #f5f7ff;
+  text-align: center;
+}
+
+.reviews h2 {
+  font-size: 32px;
+  margin-bottom: 40px;
+  color: #1f2937;
+}
+
+.review-grid {
+  max-width: 1100px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.review-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 28px;
+  text-align: left;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.review-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 25px 45px rgba(99, 102, 241, 0.2);
+}
+
+.review-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #374151;
+  margin-bottom: 20px;
+}
+
+.review-user {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 12px;
+}
+
+.review-name {
+  display: block;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.review-role {
+  font-size: 13px;
+  color: #6b7280;
+}
+
