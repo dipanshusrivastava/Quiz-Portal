@@ -64,8 +64,23 @@ fetch(`http://localhost:5000/api/quiz/${quizId}`, {
     }
 
     quizTitle.innerText = quiz.title;
-    // ⏱️ Start timer using quiz duration (minutes → seconds)
-    startTimer(quiz.duration * 60);
+    // ✅ GLOBAL TIMER (remaining time only)
+    const startTime = new Date(quiz.startTime);
+    const endTime = new Date(startTime.getTime() + quiz.duration * 60000);
+    const now = new Date();
+
+    let remainingSeconds = Math.floor((endTime - now) / 1000);
+
+    // 🛑 Quiz already expired
+    if (remainingSeconds <= 0) {
+      alert("Quiz time is already over");
+      submitQuiz(); // optional auto-submit or redirect
+      return;
+    }
+
+    // ▶️ Start timer with remaining time only
+    startTimer(remainingSeconds);
+    
     quizForm.innerHTML = "";
 
     quiz.questions.forEach((q, i) => {

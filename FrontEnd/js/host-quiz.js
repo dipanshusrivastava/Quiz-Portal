@@ -37,12 +37,18 @@ function loadHostHistory() {
       Authorization: `Bearer ${token}`,
     },
   })
-    .then((res) => res.json())
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error("API error");
+      }
+      return res.json();
+    })
     .then((history) => {
       const list = document.getElementById("historyList");
       list.innerHTML = "";
 
-      if (!history.length) {
+      // ✅ SAFETY CHECK
+      if (!Array.isArray(history) || history.length === 0) {
         list.innerHTML = "<p>No previous hosting history.</p>";
         return;
       }
@@ -59,10 +65,12 @@ function loadHostHistory() {
         `;
       });
     })
-    .catch(() => {
+    .catch((err) => {
+      console.error(err);
       alert("Failed to load history");
     });
 }
+
 
 // 👀 VIEW QUIZ (READ-ONLY)
 function viewQuiz() {

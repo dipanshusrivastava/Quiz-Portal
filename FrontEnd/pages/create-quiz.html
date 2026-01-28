@@ -19,14 +19,27 @@
 
       <input id="questionText" type="text" placeholder="Enter question" />
 
-      <input class="option" type="text" placeholder="Option 1" />
-      <input class="option" type="text" placeholder="Option 2" />
-      <input class="option" type="text" placeholder="Option 3" />
-      <input class="option" type="text" placeholder="Option 4" />
+      <div class="option-row">
+        <input type="radio" name="correct" value="0" />
+        <input class="option" type="text" placeholder="Option 1" />
+      </div>
 
-      <h3>Correct Answer</h3>
+      <div class="option-row">
+        <input type="radio" name="correct" value="1" />
+        <input class="option" type="text" placeholder="Option 2" />
+      </div>
 
-      <div class="correct-answer-row">
+      <div class="option-row">
+        <input type="radio" name="correct" value="2" />
+        <input class="option" type="text" placeholder="Option 3" />
+      </div>
+
+      <div class="option-row">
+        <input type="radio" name="correct" value="3" />
+        <input class="option" type="text" placeholder="Option 4" />
+      </div>
+
+      <!-- <div class="correct-answer-row">
         <div class="answer-col">
           <span>Option 1</span>
           <input type="radio" name="correct" value="0" />
@@ -46,7 +59,7 @@
           <span>Option 4</span>
           <input type="radio" name="correct" value="3" />
         </div>
-      </div>
+      </div> -->
 
       <button onclick="addQuestion()">Add Question</button>
 

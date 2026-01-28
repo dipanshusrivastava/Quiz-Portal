@@ -297,7 +297,6 @@ router.post("/host/:id", auth, async (req, res) => {
 });
 
 // Preview Route
-
 router.get("/preview/:id", auth, async (req, res) => {
   try {
     const quiz = await Quiz.findByPk(req.params.id, {
@@ -437,6 +436,7 @@ router.get("/:id", async (req, res) => {
       id: quiz.id,
       title: quiz.title,
       duration: quiz.duration,
+      startTime: quiz.startTime,
       questions: quiz.Questions.map((q) => ({
         question: q.text,
         options: q.Options.map((o) => o.text),
@@ -458,9 +458,12 @@ SUBMIT QUIZ
 */
 router.post("/submit/:id", auth, async (req, res) => {
   try {
-    
     const quizId = req.params.id;
     const { answers } = req.body;
+
+    if (!Array.isArray(answers)) {
+      return res.status(400).json({ message: "Invalid answers format" });
+    }
 
     const quiz = await Quiz.findByPk(quizId, {
       include: {
@@ -473,26 +476,36 @@ router.post("/submit/:id", auth, async (req, res) => {
       return res.status(404).json({ message: "Quiz not found" });
     }
 
-    // ❌ Quiz not live
-    if (quiz.status !== "LIVE") {
-      return res.status(403).json({ message: "Quiz is not live" });
+    // ❌ Block if quiz already completed
+    if (quiz.status === "COMPLETED") {
+      return res.status(403).json({ message: "Quiz already completed" });
     }
 
-    // ⏱ Time validation
+    // ❌ Prevent double submission (same user)
+    const existingResult = await Result.findOne({
+      where: {
+        QuizId: quiz.id,
+        email: req.user.email,
+      },
+    });
+
+    if (existingResult) {
+      return res.status(400).json({ message: "Quiz already submitted" });
+    }
+
+    // ⏱ Time calculation
     const now = new Date();
     const start = new Date(quiz.startTime);
     const end = new Date(start.getTime() + quiz.duration * 60000);
 
-    // 🛑 Time over → mark COMPLETED
-    if (now > end) {
-      if (quiz.status !== "COMPLETED") {
-        await quiz.update({ status: "COMPLETED" });
-      }
-      return res.status(403).json({ message: "Quiz time is over" });
+    // ❌ Block if quiz never started
+    if (now < start) {
+      return res.status(403).json({ message: "Quiz has not started yet" });
     }
 
     // ✅ Calculate score
     let score = 0;
+
     quiz.Questions.forEach((question, index) => {
       const correctIndex = question.Options.findIndex((opt) => opt.isCorrect);
       if (answers[index] === correctIndex) {
@@ -500,7 +513,7 @@ router.post("/submit/:id", auth, async (req, res) => {
       }
     });
 
-    // ✅ Save result
+    // ✅ Save result FIRST (important for auto-submit)
     await Result.create({
       score,
       name: req.user.name,
@@ -508,7 +521,15 @@ router.post("/submit/:id", auth, async (req, res) => {
       QuizId: quiz.id,
     });
 
-    res.json({ score });
+    // 🛑 If time is over, mark quiz completed AFTER saving
+    if (now > end) {
+      await quiz.update({ status: "COMPLETED" });
+    }
+
+    res.json({
+      message: "Quiz submitted successfully",
+      score,
+    });
   } catch (err) {
     console.error("SUBMIT ERROR:", err);
     res.status(500).json({ message: "Failed to submit quiz" });
