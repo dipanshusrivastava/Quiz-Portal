@@ -2,25 +2,83 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Leaderboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leaderboard | Exam Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="../css/style.css" />
   </head>
-  <body>
-    <div class="leaderboard-container">
-      <h1>Leaderboard</h1>
-      <table id="leaderboardTable">
-        <thead>
-          <tr>
-            <th>Rank</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Score</th>
-            <th>SubmittedAt</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
+  <body class="dashboard-page leaderboard-page">
+    <header class="portal-header">
+      <nav class="portal-nav">
+        <a class="logo" href="../index.html" aria-label="Exam Portal home">
+          <span class="logo-mark">E</span>
+          <span>Exam<span>Portal</span></span>
+        </a>
+
+        <div class="portal-nav-actions">
+          <span class="portal-status"><i></i> Results workspace</span>
+          <a class="portal-nav-link" href="./dashboard.html">&larr; Dashboard</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="portal-main leaderboard-main">
+      <section class="leaderboard-hero">
+        <div>
+          <span class="portal-kicker">Performance results</span>
+          <h1>Leaderboard.</h1>
+          <p>See how learners performed and celebrate every completed assessment.</p>
+        </div>
+
+        <div class="leaderboard-hero-mark" aria-hidden="true">
+          <span>&#9733;</span>
+          <small>Results</small>
+        </div>
+      </section>
+
+      <section class="leaderboard-panel">
+        <div class="leaderboard-panel-heading">
+          <div>
+            <span class="portal-kicker">Quiz rankings</span>
+            <h2>Performance overview</h2>
+            <p>Scores are listed by rank with learner details and submission times.</p>
+          </div>
+          <span class="library-label">Live results</span>
+        </div>
+
+        <div class="leaderboard-table-wrap">
+          <table id="leaderboardTable">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Score</th>
+                <th>Submitted at</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="leaderboard-note">
+        <span class="support-icon">&#9671;</span>
+        <div>
+          <h3>Progress worth recognizing</h3>
+          <p>Every result is a useful signal for the next learning step.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="portal-footer">
+      <p>&copy; 2026 Exam Portal. Secure Online Examination System.</p>
+    </footer>
 
     <script src="../js/leaderboard.js"></script>
   </body>

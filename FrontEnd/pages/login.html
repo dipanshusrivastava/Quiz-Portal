@@ -2,28 +2,113 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login | Exam Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="../css/style.css" />
   </head>
-  <body>
-    <div class="container">
-      <h1>Login</h1>
+  <body class="auth-page login-page">
+    <main class="auth-layout">
+      <section class="auth-showcase">
+        <div class="auth-showcase-glow"></div>
 
-      <input id="email" type="email" placeholder="Email Address" />
+        <a class="logo auth-logo" href="../index.html" aria-label="Exam Portal home">
+          <span class="logo-mark">E</span>
+          <span>Exam<span>Portal</span></span>
+        </a>
 
-      <input id="password" type="password" placeholder="Password" />
+        <div class="auth-showcase-copy">
+          <span class="section-kicker">Welcome back to better assessments</span>
+          <h1>Learn. Improve. <em>Succeed.</em></h1>
+          <p>
+            Continue your assessment journey with secure quizzes, focused exam
+            sessions, and performance insights that help you move forward.
+          </p>
 
-      <p style="text-align: right; margin: 5px 0 15px">
-        <a href="./forgot-password.html">Forgot password?</a>
-      </p>
+          <div class="auth-benefits">
+            <div>
+              <span class="auth-benefit-icon">&#10003;</span>
+              <div>
+                <strong>A focused exam experience</strong>
+                <small>Everything you need, without distractions.</small>
+              </div>
+            </div>
+            <div>
+              <span class="auth-benefit-icon">&#10003;</span>
+              <div>
+                <strong>Results when you need them</strong>
+                <small>Review performance as soon as you finish.</small>
+              </div>
+            </div>
+            <div>
+              <span class="auth-benefit-icon">&#10003;</span>
+              <div>
+                <strong>One dependable portal</strong>
+                <small>Return to your quizzes and continue growing.</small>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <button onclick="login()">Login</button>
+        <p class="auth-showcase-footer">Simple for students. Powerful for educators.</p>
+      </section>
 
-      <p style="text-align: center; margin-top: 15px">
-        Don’t have an account?
-        <a href="./signup.html">Signup</a>
-      </p>
-    </div>
+      <section class="auth-form-side">
+        <div class="auth-form-wrap">
+          <div class="auth-mobile-top">
+            <a class="logo" href="../index.html" aria-label="Exam Portal home">
+              <span class="logo-mark">E</span>
+              <span>Exam<span>Portal</span></span>
+            </a>
+          </div>
+
+          <div class="auth-heading">
+            <span class="section-kicker">Good to see you again</span>
+            <h2>Log in to your portal</h2>
+            <p>Enter your details to pick up where you left off.</p>
+          </div>
+
+          <div class="auth-form">
+            <label for="email">Email address</label>
+            <div class="auth-input-wrap">
+              <span aria-hidden="true">@</span>
+              <input id="email" type="email" placeholder="Enter your email address" autocomplete="email" />
+            </div>
+
+            <div class="auth-label-row">
+              <label for="password">Password</label>
+              <a href="./forgot-password.html">Forgot password?</a>
+            </div>
+            <div class="auth-input-wrap">
+              <span aria-hidden="true">&#9679;</span>
+              <input
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+              />
+            </div>
+
+            <button class="auth-submit" onclick="login()">
+              Log in
+              <span aria-hidden="true">&rarr;</span>
+            </button>
+          </div>
+
+          <p class="auth-switch">
+            Don&rsquo;t have an account?
+            <a href="./signup.html">Sign up</a>
+          </p>
+
+          <a class="auth-back" href="../index.html">&larr; Back to home</a>
+        </div>
+      </section>
+    </main>
 
     <script src="../js/auth.js"></script>
   </body>

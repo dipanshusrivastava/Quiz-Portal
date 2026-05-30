@@ -3,23 +3,97 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edit Quiz</title>
+    <title>Edit Quiz | Exam Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="../css/style.css" />
   </head>
-  <body>
-    <div class="container-question">
-      <div class="card edit-card">
-        <h2>Edit Quiz</h2>
+  <body class="dashboard-page edit-quiz-page">
+    <header class="portal-header">
+      <nav class="portal-nav">
+        <a class="logo" href="../index.html" aria-label="Exam Portal home">
+          <span class="logo-mark">E</span>
+          <span>Exam<span>Portal</span></span>
+        </a>
 
-        <!-- Quiz title -->
-        <input id="title" placeholder="Quiz title" />
+        <div class="portal-nav-actions">
+          <span class="portal-status"><i></i> Creator workspace</span>
+          <a class="portal-nav-link" href="./dashboard.html">&larr; Dashboard</a>
+        </div>
+      </nav>
+    </header>
 
-        <!-- Questions will be injected here dynamically -->
-        <div id="questions"></div>
+    <main class="portal-main edit-quiz-main">
+      <section class="edit-page-heading">
+        <div>
+          <span class="portal-kicker">Quiz editor</span>
+          <h1>Refine your assessment.</h1>
+          <p>Review the title, polish each question, and save your updates when everything is ready.</p>
+        </div>
+        <div class="builder-progress">
+          <span class="builder-progress-number">02</span>
+          <div>
+            <strong>Edit your quiz</strong>
+            <small>Keep every question clear and accurate</small>
+          </div>
+        </div>
+      </section>
 
-        <button onclick="saveQuiz()">Save Changes</button>
+      <div class="edit-quiz-layout">
+        <aside class="edit-sidebar">
+          <span class="portal-kicker">Assessment details</span>
+          <h2>Quiz information</h2>
+          <p>Give your assessment a clear title before reviewing its question set.</p>
+
+          <label for="title">Quiz title</label>
+          <input id="title" placeholder="Quiz title" />
+
+          <div class="builder-tip">
+            <span>&#9671;</span>
+            <div>
+              <strong>Editing tip</strong>
+              <p>Check every correct response before saving your changes.</p>
+            </div>
+          </div>
+
+          <a class="builder-back-link" href="./dashboard.html">&larr; Back to dashboard</a>
+        </aside>
+
+        <section class="edit-content">
+          <div class="edit-question-panel">
+            <div class="builder-section-heading">
+              <div>
+                <span class="portal-kicker">Question set</span>
+                <h2>Edit questions</h2>
+                <p>Update question prompts, revise options, and confirm the correct answer.</p>
+              </div>
+              <span class="editor-badge">Review mode</span>
+            </div>
+
+            <div id="questions" class="edit-question-list"></div>
+          </div>
+
+          <div class="builder-publish edit-save-panel">
+            <div>
+              <strong>Finished reviewing?</strong>
+              <p>Save your changes to return to the dashboard.</p>
+            </div>
+            <button class="quiz-create-button" onclick="saveQuiz()">
+              Save changes
+              <span>&rarr;</span>
+            </button>
+          </div>
+        </section>
       </div>
-    </div>
+    </main>
+
+    <footer class="portal-footer">
+      <p>&copy; 2026 Exam Portal. Secure Online Examination System.</p>
+    </footer>
 
     <script src="../js/edit-quiz.js"></script>
   </body>

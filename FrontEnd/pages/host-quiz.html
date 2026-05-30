@@ -3,24 +3,138 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Host Quiz</title>
+    <title>Host Quiz | Exam Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="../css/style.css" />
   </head>
-  <body>
-    <div class="container">
-      <div class="card host-card">
-        <h2>Host Quiz</h2>
+  <body class="dashboard-page host-quiz-page">
+    <header class="portal-header">
+      <nav class="portal-nav">
+        <a class="logo" href="../index.html" aria-label="Exam Portal home">
+          <span class="logo-mark">E</span>
+          <span>Exam<span>Portal</span></span>
+        </a>
 
-        <input id="passcode" placeholder="Passcode" />
-        <input id="duration" type="number" placeholder="Duration (minutes)" />
-        <input id="startTime" type="datetime-local" />
+        <div class="portal-nav-actions">
+          <span class="portal-status"><i></i> Creator workspace</span>
+          <a class="portal-nav-link" href="./dashboard.html">&larr; Dashboard</a>
+        </div>
+      </nav>
+    </header>
 
-        <button onclick="host()">Start Hosting</button>
+    <main class="portal-main host-quiz-main">
+      <section class="host-page-heading">
+        <div>
+          <span class="portal-kicker">Hosting console</span>
+          <h1>Launch a secure quiz session.</h1>
+          <p>Set the access details, choose a start time, and prepare your assessment for learners.</p>
+        </div>
+        <div class="builder-progress">
+          <span class="builder-progress-number">03</span>
+          <div>
+            <strong>Host your quiz</strong>
+            <small>Configure a focused exam session</small>
+          </div>
+        </div>
+      </section>
 
-        <h3>Previous Hosting History</h3>
-        <div id="historyList"></div>
+      <div class="host-quiz-layout">
+        <section class="host-launch-panel">
+          <div class="builder-section-heading">
+            <div>
+              <span class="portal-kicker">Session details</span>
+              <h2>Prepare the exam room</h2>
+              <p>Share the passcode only with the learners who should access this quiz.</p>
+            </div>
+            <span class="editor-badge">Secure setup</span>
+          </div>
+
+          <div class="host-form-grid">
+            <div class="host-field host-field-passcode">
+              <label for="passcode">Quiz passcode</label>
+              <div class="host-input-wrap">
+                <span aria-hidden="true">@</span>
+                <input id="passcode" placeholder="Create an access passcode" autocomplete="off" />
+              </div>
+              <small>Learners will enter this before starting.</small>
+            </div>
+
+            <div class="host-field">
+              <label for="duration">Duration</label>
+              <div class="host-input-wrap">
+                <span aria-hidden="true">&#9719;</span>
+                <input id="duration" type="number" placeholder="Minutes" min="1" />
+              </div>
+              <small>Set the available exam time in minutes.</small>
+            </div>
+
+            <div class="host-field">
+              <label for="startTime">Start time</label>
+              <div class="host-input-wrap">
+                <span aria-hidden="true">&#9671;</span>
+                <input id="startTime" type="datetime-local" />
+              </div>
+              <small>Choose when learners can begin the quiz.</small>
+            </div>
+          </div>
+
+          <div class="host-launch-footer">
+            <div>
+              <strong>Ready to make it live?</strong>
+              <p>Review the details before opening this session.</p>
+            </div>
+            <button class="host-launch-button" onclick="host()">
+              Start hosting
+              <span>&rarr;</span>
+            </button>
+          </div>
+        </section>
+
+        <aside class="host-guidance">
+          <span class="portal-kicker">Hosting checklist</span>
+          <h2>A smoother exam starts with a quick review.</h2>
+
+          <div class="host-checklist">
+            <div>
+              <span>&#10003;</span>
+              <p>Use a memorable passcode for your learners.</p>
+            </div>
+            <div>
+              <span>&#10003;</span>
+              <p>Allow enough time for every question.</p>
+            </div>
+            <div>
+              <span>&#10003;</span>
+              <p>Confirm the scheduled start before hosting.</p>
+            </div>
+          </div>
+
+          <a class="builder-back-link" href="./dashboard.html">&larr; Back to dashboard</a>
+        </aside>
       </div>
-    </div>
+
+      <section class="host-history-panel">
+        <div class="available-library-heading">
+          <div>
+            <span class="portal-kicker">Session archive</span>
+            <h2>Previous hosting history</h2>
+            <p>Review past session details or open a read-only preview of the quiz.</p>
+          </div>
+          <span class="library-label">Hosting records</span>
+        </div>
+
+        <div id="historyList" class="host-history-list"></div>
+      </section>
+    </main>
+
+    <footer class="portal-footer">
+      <p>&copy; 2026 Exam Portal. Secure Online Examination System.</p>
+    </footer>
 
     <script src="../js/host-quiz.js"></script>
   </body>

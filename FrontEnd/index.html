@@ -2,135 +2,291 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Exam Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A modern online examination platform for students, teachers, and institutes."
+    />
+    <title>Exam Portal | Smarter Online Assessments</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./css/style.css" />
   </head>
-  <body>
+  <body class="landing-page">
+    <header class="landing-header">
+      <nav class="navbar landing-nav">
+        <a class="logo" href="./index.html" aria-label="Exam Portal home">
+          <span class="logo-mark">E</span>
+          <span>Exam<span>Portal</span></span>
+        </a>
 
-    <!-- ============ NAVBAR ============ -->
-    <nav class="navbar">
-      <div class="logo">🎓 Exam Portal</div>
-      <div class="nav-links">
-        <a href="#">Features</a>
-        <a href="#">For Students</a>
-        <a href="#">For Teachers</a>
-        <a href="./pages/login.html">Login</a>
-      </div>
-    </nav>
-
-    <!-- ============ HERO SECTION ============ -->
-    <section class="hero">
-      <div class="hero-left">
-        <h1>Smart Online Exam Platform</h1>
-        <p class="hero-sub">
-          Create quizzes, conduct exams, and analyze performance all in one secure system.
-        </p>
-        <div class="hero-buttons">
-          <a href="./pages/signup.html"><button>🚀 Sign Up</button></a>
-          <a href="./pages/login.html"><button class="secondary-btn">🔐 Login</button></a>
+        <div class="nav-links">
+          <a href="#features">Features</a>
+          <a href="#solutions">Solutions</a>
+          <a href="#reviews">Reviews</a>
         </div>
-      </div>
 
-      <div class="hero-right">
-        <img src="/FrontEnd/images/1766117946955.png" alt="Exam Illustration" />
-      </div>
-    </section>
-
-    <!-- ============ FEATURES SECTION ============ -->
-    <section class="features">
-      <h2>Why Choose Our Exam Portal?</h2>
-      <div class="feature-grid">
-        <div class="feature-card">
-          <h3>📝 Easy Quiz Creation</h3>
-          <p>Create quizzes in seconds with simple inputs.</p>
+        <div class="nav-actions">
+          <a class="nav-login" href="./pages/login.html">Log in</a>
+          <a class="landing-button landing-button-small" href="./pages/signup.html">Get started</a>
         </div>
-        <div class="feature-card">
-          <h3>⏱️ Timed Exams</h3>
-          <p>Auto-submit when time ends to ensure fairness.</p>
+      </nav>
+    </header>
+
+    <main>
+      <section class="landing-hero">
+        <div class="hero-glow hero-glow-left"></div>
+        <div class="hero-glow hero-glow-right"></div>
+
+        <div class="landing-shell hero-layout">
+          <div class="hero-copy">
+            <div class="hero-kicker">
+              <span></span>
+              The smarter way to assess
+            </div>
+            <h1>Turn every exam into a <em>better learning</em> experience.</h1>
+            <p class="hero-sub">
+              Create secure online quizzes, host live assessments, and understand
+              performance with instant results in one effortless platform.
+            </p>
+
+            <div class="hero-buttons">
+              <a class="landing-button" href="./pages/signup.html">
+                Start for free
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+              <a class="landing-button landing-button-secondary" href="./pages/login.html">
+                Log in to portal
+              </a>
+            </div>
+
+            <div class="hero-proof">
+              <div class="proof-avatars" aria-hidden="true">
+                <span>AS</span>
+                <span>DS</span>
+                <span>GA</span>
+              </div>
+              <div>
+                <strong>Trusted by growing classrooms</strong>
+                <p>Simple for students. Powerful for educators.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-visual">
+            <div class="visual-orbit visual-orbit-one"></div>
+            <div class="visual-orbit visual-orbit-two"></div>
+
+            <div class="hero-dashboard">
+              <div class="dashboard-top">
+                <div>
+                  <span class="dashboard-label">Performance overview</span>
+                  <h2>Learning insights</h2>
+                </div>
+                <span class="dashboard-chip">Live</span>
+              </div>
+
+              <div class="dashboard-score">
+                <div class="score-ring">
+                  <div><strong>86%</strong><span>Average</span></div>
+                </div>
+                <div class="score-copy">
+                  <span>Overall progress</span>
+                  <strong>Excellent growth</strong>
+                  <p>Students improved by 18% this month.</p>
+                </div>
+              </div>
+
+              <div class="dashboard-chart">
+                <div class="chart-heading">
+                  <span>Weekly activity</span>
+                  <small>Last 7 days</small>
+                </div>
+                <div class="chart-bars" aria-hidden="true">
+                  <span style="height: 38%"></span>
+                  <span style="height: 58%"></span>
+                  <span style="height: 48%"></span>
+                  <span style="height: 72%"></span>
+                  <span style="height: 62%"></span>
+                  <span style="height: 86%"></span>
+                  <span class="active" style="height: 100%"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="floating-card floating-card-top">
+              <span class="floating-icon">&#10003;</span>
+              <div><strong>Quiz published</strong><small>Ready for your class</small></div>
+            </div>
+
+            <div class="floating-card floating-card-bottom">
+              <span class="floating-number">5k+</span>
+              <div><strong>Active learners</strong><small>and growing every day</small></div>
+            </div>
+          </div>
         </div>
-        <div class="feature-card">
-          <h3>📊 Instant Results</h3>
-          <p>Students get performance analytics instantly.</p>
+      </section>
+
+      <section class="landing-stats">
+        <div class="landing-shell stats-grid">
+          <div><strong>10k+</strong><span>Quizzes created</span></div>
+          <div><strong>5k+</strong><span>Active students</span></div>
+          <div><strong>500+</strong><span>Educators onboard</span></div>
+          <div><strong>99.9%</strong><span>Platform reliability</span></div>
         </div>
-        <div class="feature-card">
-          <h3>🔒 Secure System</h3>
-          <p>Protected login and safe exam environment.</p>
+      </section>
+
+      <section class="landing-section landing-features" id="features">
+        <div class="landing-shell">
+          <div class="section-heading">
+            <span class="section-kicker">Everything you need</span>
+            <h2>Assessment tools that feel refreshingly simple.</h2>
+            <p>Spend less time managing exams and more time helping learners progress.</p>
+          </div>
+
+          <div class="feature-grid landing-feature-grid">
+            <article class="feature-card landing-feature-card feature-card-highlight">
+              <span class="feature-number">01</span>
+              <div class="feature-icon">&#10022;</div>
+              <h3>Effortless quiz creation</h3>
+              <p>Build, edit, and publish thoughtful assessments in minutes.</p>
+            </article>
+            <article class="feature-card landing-feature-card">
+              <span class="feature-number">02</span>
+              <div class="feature-icon">&#9719;</div>
+              <h3>Fair timed exams</h3>
+              <p>Keep every attempt consistent with automatic timed submissions.</p>
+            </article>
+            <article class="feature-card landing-feature-card">
+              <span class="feature-number">03</span>
+              <div class="feature-icon">&#8599;</div>
+              <h3>Instant performance</h3>
+              <p>Turn completed quizzes into clear and actionable results.</p>
+            </article>
+            <article class="feature-card landing-feature-card">
+              <span class="feature-number">04</span>
+              <div class="feature-icon">&#9671;</div>
+              <h3>Secure by design</h3>
+              <p>Give every learner a focused and dependable exam environment.</p>
+            </article>
+          </div>
         </div>
+      </section>
+
+      <section class="landing-section landing-solutions" id="solutions">
+        <div class="landing-shell solutions-layout">
+          <div class="solutions-copy">
+            <span class="section-kicker">Made for every classroom</span>
+            <h2>A better exam flow for everyone involved.</h2>
+            <p>
+              Whether you are preparing for your next test or managing an entire
+              institute, ExamPortal keeps your assessment workflow organized.
+            </p>
+            <a class="text-link" href="./pages/signup.html">Create your account <span>&rarr;</span></a>
+          </div>
+
+          <div class="solution-grid">
+            <article class="solution-card">
+              <span>01</span>
+              <h3>Students</h3>
+              <p>Take assessments confidently and see results without waiting.</p>
+            </article>
+            <article class="solution-card">
+              <span>02</span>
+              <h3>Teachers</h3>
+              <p>Create meaningful quizzes and track every attempt with ease.</p>
+            </article>
+            <article class="solution-card">
+              <span>03</span>
+              <h3>Institutes</h3>
+              <p>Run dependable online exams across growing learner groups.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="landing-section landing-reviews" id="reviews">
+        <div class="landing-shell">
+          <div class="section-heading section-heading-left">
+            <span class="section-kicker">Loved by educators and learners</span>
+            <h2>Built for the moments that matter.</h2>
+          </div>
+
+          <div class="review-grid landing-review-grid">
+            <article class="review-card landing-review-card">
+              <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="review-text">
+                &ldquo;This platform made conducting online exams extremely easy and
+                secure. The dashboard is super intuitive.&rdquo;
+              </p>
+              <div class="review-user">
+                <span class="review-avatar">AS</span>
+                <div>
+                  <span class="review-name">Amit Sharma</span>
+                  <span class="review-role">Teacher</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="review-card landing-review-card featured-review">
+              <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="review-text">
+                &ldquo;Timed exams and instant results helped me prepare better for my
+                tests. I loved how smooth the whole experience felt.&rdquo;
+              </p>
+              <div class="review-user">
+                <span class="review-avatar">DS</span>
+                <div>
+                  <span class="review-name">Dipanshu Srivastava</span>
+                  <span class="review-role">Student</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="review-card landing-review-card">
+              <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="review-text">
+                &ldquo;We successfully conducted exams for 200+ students without any
+                issues. Highly recommended for institutes.&rdquo;
+              </p>
+              <div class="review-user">
+                <span class="review-avatar">GA</span>
+                <div>
+                  <span class="review-name">Greenfield Academy</span>
+                  <span class="review-role">Institute</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="landing-cta">
+        <div class="landing-shell cta-panel">
+          <div>
+            <span class="section-kicker">Ready to begin?</span>
+            <h2>Make your next assessment your smoothest one yet.</h2>
+          </div>
+          <a class="landing-button landing-button-light" href="./pages/signup.html">
+            Get started now <span>&rarr;</span>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer landing-footer">
+      <div class="landing-shell footer-layout">
+        <a class="logo footer-logo" href="./index.html">
+          <span class="logo-mark">E</span>
+          <span>Exam<span>Portal</span></span>
+        </a>
+        <p>&copy; 2026 Exam Portal. Secure Online Examination System.</p>
+        <p>Created by Dipanshu Srivastava</p>
       </div>
-    </section>
-
-    <!-- ============ STATS SECTION ============ -->
-    <section class="stats">
-      <div>10,000+ Quizzes Created</div>
-      <div>5,000+ Students</div>
-      <div>500+ Teachers</div>
-      <div>99.9% Secure</div>
-    </section>
-
-    <!-- ============ WHO IT'S FOR ============ -->
-    <section class="users">
-      <h2>Built For Everyone</h2>
-      <div class="user-grid">
-        <div class="user-card">
-          <h3>🎓 Students</h3>
-          <p>Practice and improve with online tests.</p>
-        </div>
-        <div class="user-card">
-          <h3>👩‍🏫 Teachers</h3>
-          <p>Create and manage exams easily.</p>
-        </div>
-        <div class="user-card">
-          <h3>🏫 Institutes</h3>
-          <p>Conduct large-scale exams online.</p>
-        </div>
-      </div>
-    </section>
-
-<!-- ============ REVIEWS / TESTIMONIALS ============ -->
-<section class="reviews">
-  <h2>What Our Users Say</h2>
-
-  <div class="review-grid">
-    <div class="review-card">
-      <p class="review-text">
-        “This platform made conducting online exams extremely easy and secure.
-        The dashboard is super intuitive.”
-      </p>
-      <div class="review-user">
-        <span class="review-name">Amit Sharma</span>
-        <span class="review-role">Teacher</span>
-      </div>
-    </div>
-
-    <div class="review-card">
-      <p class="review-text">
-        “Timed exams and instant results helped me prepare better for my tests.
-        Loved the smooth experience!”
-      </p>
-      <div class="review-user">
-        <span class="review-name">Dipanshu Srivastava</span>
-        <span class="review-role">Student</span>
-      </div>
-    </div>
-
-    <div class="review-card">
-      <p class="review-text">
-        “We successfully conducted exams for 200+ students without any issues.
-        Highly recommended for institutes.”
-      </p>
-      <div class="review-user">
-        <span class="review-name">Greenfield Academy</span>
-        <span class="review-role">Institute</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-    <!-- ============ FOOTER ============ -->
-    <footer class="footer">
-      <p>© 2026 Exam Portal | Secure Online Examination System</p>
     </footer>
-
   </body>
 </html>

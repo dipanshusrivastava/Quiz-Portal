@@ -2,17 +2,82 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Online Exam</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Online Exam | Exam Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="../css/style.css" />
   </head>
-  <body>
-    <div class="dashboard">
-      <div class="timer" id="timer">Loading...</div>
+  <body class="dashboard-page quiz-page">
+    <header class="portal-header">
+      <nav class="portal-nav">
+        <a class="logo" href="../index.html" aria-label="Exam Portal home">
+          <span class="logo-mark">E</span>
+          <span>Exam<span>Portal</span></span>
+        </a>
 
-      <div id="quiz"></div>
+        <div class="portal-nav-actions">
+          <span class="portal-status"><i></i> Secure exam session</span>
+        </div>
+      </nav>
+    </header>
 
-      <button onclick="submit()">Submit Exam</button>
-    </div>
+    <main class="portal-main quiz-main">
+      <section class="quiz-session-heading">
+        <div>
+          <span class="portal-kicker">Online assessment</span>
+          <h1>Stay focused. Do your best.</h1>
+          <p>Read each question carefully and review your answers before submitting the exam.</p>
+        </div>
+
+        <div class="quiz-timer-card">
+          <span class="quiz-timer-icon">&#9719;</span>
+          <div>
+            <small>Remaining time</small>
+            <div class="timer" id="timer">Loading...</div>
+          </div>
+        </div>
+      </section>
+
+      <div class="quiz-workspace">
+        <section class="quiz-content-panel">
+          <div class="quiz-panel-heading">
+            <div>
+              <span class="portal-kicker">Question set</span>
+              <h2>Your exam questions</h2>
+              <p>Select the best answer for each question below.</p>
+            </div>
+            <span class="editor-badge">In progress</span>
+          </div>
+
+          <div id="quiz" class="quiz-question-list"></div>
+        </section>
+
+        <aside class="quiz-submit-panel">
+          <span class="portal-kicker">Final step</span>
+          <h2>Ready to submit?</h2>
+          <p>Review each response carefully. Your answers will be final once submitted.</p>
+
+          <div class="quiz-submit-note">
+            <span>&#9671;</span>
+            <p>Keep this page open until your submission is complete.</p>
+          </div>
+
+          <button class="quiz-submit-button" onclick="submit()">
+            Submit exam
+            <span>&rarr;</span>
+          </button>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="portal-footer">
+      <p>&copy; 2026 Exam Portal. Secure Online Examination System.</p>
+    </footer>
 
     <script src="../js/takeQuiz.js"></script>
   </body>

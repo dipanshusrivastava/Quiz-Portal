@@ -1,22 +1,99 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Take Quiz</title>
-  <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Take Quiz | Exam Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body class="dashboard-page take-quiz-page">
+    <header class="portal-header">
+      <nav class="portal-nav">
+        <a class="logo" href="../index.html" aria-label="Exam Portal home">
+          <span class="logo-mark">E</span>
+          <span>Exam<span>Portal</span></span>
+        </a>
 
-  <div class="container">
-    <h1 id="quizTitle">Loading Quiz...</h1>
+        <div class="portal-nav-actions">
+          <span class="portal-status"><i></i> Secure exam session</span>
+        </div>
+      </nav>
+    </header>
 
-    <div id="timer"></div>
+    <main class="portal-main take-quiz-main">
+      <section class="take-quiz-hero">
+        <div>
+          <span class="portal-kicker">Online assessment</span>
+          <h1 id="quizTitle">Loading quiz...</h1>
+          <p>Read each question carefully, choose your answers, and submit before time runs out.</p>
+        </div>
 
-    <div id="quizForm"></div>
+        <div class="take-quiz-timer">
+          <span class="take-quiz-timer-icon">&#9719;</span>
+          <div>
+            <small>Remaining time</small>
+            <div id="timer">Preparing timer...</div>
+          </div>
+        </div>
+      </section>
 
-    <button type="button" onclick="submitQuiz()">Submit</button>
-  </div>
+      <div class="take-quiz-layout">
+        <section class="take-quiz-question-panel">
+          <div class="take-quiz-panel-heading">
+            <div>
+              <span class="portal-kicker">Question set</span>
+              <h2>Your exam questions</h2>
+              <p>Choose one response for each question.</p>
+            </div>
+            <span class="editor-badge">In progress</span>
+          </div>
 
-  <script src="../js/takeQuiz.js"></script>
-</body>
+          <div id="quizForm" class="take-quiz-question-list">
+            <div class="preview-loading-state">
+              <span>&#10022;</span>
+              <p>Loading exam questions...</p>
+            </div>
+          </div>
+        </section>
+
+        <aside class="take-quiz-submit-panel">
+          <span class="portal-kicker">Final step</span>
+          <h2>Submit with confidence.</h2>
+          <p>Review your responses carefully. Your answers become final after submission.</p>
+
+          <div class="take-quiz-checklist">
+            <div>
+              <span>&#10003;</span>
+              <p>Answer every question you can.</p>
+            </div>
+            <div>
+              <span>&#10003;</span>
+              <p>Keep this page open during the exam.</p>
+            </div>
+            <div>
+              <span>&#10003;</span>
+              <p>Submit before the timer reaches zero.</p>
+            </div>
+          </div>
+
+          <button class="take-quiz-submit-button" type="button" onclick="submitQuiz()">
+            Submit exam
+            <span>&rarr;</span>
+          </button>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="portal-footer">
+      <p>&copy; 2026 Exam Portal. Secure Online Examination System.</p>
+    </footer>
+
+    <script src="../js/takeQuiz.js"></script>
+  </body>
 </html>

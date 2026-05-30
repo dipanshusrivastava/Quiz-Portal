@@ -2,42 +2,113 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard | Exam Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="../css/style.css" />
   </head>
-  <body>
-    <div class="dashboard">
-      <h1>🎓Exam Portal</h1>
-      <p class="role-text" id="roleText"></p>
+  <body class="dashboard-page">
+    <header class="portal-header">
+      <nav class="portal-nav">
+        <a class="logo" href="../index.html" aria-label="Exam Portal home">
+          <span class="logo-mark">E</span>
+          <span>Exam<span>Portal</span></span>
+        </a>
+
+        <div class="portal-nav-actions">
+          <span class="portal-status"><i></i> Secure portal</span>
+          <button class="portal-logout" onclick="logout()">Log out</button>
+        </div>
+      </nav>
+    </header>
+
+    <main class="portal-main">
+      <section class="dashboard-welcome">
+        <div>
+          <span class="portal-kicker">Assessment workspace</span>
+          <h1>Welcome to your dashboard.</h1>
+          <p class="role-text" id="roleText"></p>
+        </div>
+        <div class="welcome-badge" aria-hidden="true">
+          <span>&#10022;</span>
+          <small>Your portal</small>
+        </div>
+      </section>
 
       <!-- CREATOR SECTION -->
-      <div id="creatorSection" class="card" style="display: none">
-        <h2>Exam Creator</h2>
-        <p>Create and manage your quizzes.</p>
+      <section id="creatorSection" class="dashboard-workspace" style="display: none">
+        <div class="workspace-heading">
+          <div>
+            <span class="portal-kicker">Creator tools</span>
+            <h2>Manage your quizzes</h2>
+            <p>Create new assessments and keep every quiz organized in one place.</p>
+          </div>
+          <a class="portal-primary-action" href="./create-quiz.html">
+            <span>+</span>
+            Create new quiz
+          </a>
+        </div>
 
-        <a href="./create-quiz.html">
-          <button>Create New Quiz</button>
-        </a>
-
-        <h3 style="margin-top: 20px; margin-bottom: 10px">Your Quizzes</h3>
-        <div id="quizList"></div>
-      </div>
+        <div class="quiz-library">
+          <div class="library-heading">
+            <div>
+              <h3>Your quizzes</h3>
+              <p>Review, edit, host, or inspect results from your assessments.</p>
+            </div>
+            <span class="library-label">Quiz library</span>
+          </div>
+          <div id="quizList" class="dashboard-quiz-list"></div>
+        </div>
+      </section>
 
       <!-- TAKER SECTION -->
-      <div id="takerSection" class="card" style="display: none">
-        <h2>Exam Taker</h2>
-        <p>View and attempt available quizzes.</p>
+      <section id="takerSection" class="dashboard-workspace" style="display: none">
+        <div class="workspace-heading taker-heading">
+          <div>
+            <span class="portal-kicker">Student workspace</span>
+            <h2>Ready for your next challenge?</h2>
+            <p>Explore available assessments and continue building your progress.</p>
+          </div>
+        </div>
 
-        <a href="./available-quizzes.html">
-          <button>View Available Quizzes</button>
-        </a>
-      </div>
+        <div class="taker-action-card">
+          <div class="taker-card-copy">
+            <span class="taker-card-icon">&#10022;</span>
+            <div>
+              <h3>Available quizzes</h3>
+              <p>Find active quizzes, begin an attempt, and put your knowledge to work.</p>
+            </div>
+          </div>
+          <a class="portal-primary-action" href="./available-quizzes.html">
+            View available quizzes
+            <span>&rarr;</span>
+          </a>
+        </div>
+      </section>
 
-      <button class="logout-btn" onclick="logout()">Logout</button>
-    </div>
+      <section class="dashboard-support">
+        <div>
+          <span class="support-icon">&#9671;</span>
+          <div>
+            <h3>Focused and dependable</h3>
+            <p>Your assessment tools stay organized so you can focus on progress.</p>
+          </div>
+        </div>
+        <a href="../index.html">Back to homepage <span>&rarr;</span></a>
+      </section>
+    </main>
+
+    <footer class="portal-footer">
+      <p>&copy; 2026 Exam Portal. Secure Online Examination System.</p>
+    </footer>
 
     <script>
-      // 🔐 Authentication check
+      // Authentication check
       const token = localStorage.getItem("token");
       const role = localStorage.getItem("role");
 
@@ -47,7 +118,7 @@
 
       document.getElementById("roleText").innerText = `Logged in as: ${role}`;
 
-      // 🎯 Role-based UI
+      // Role-based UI
       if (role === "CREATOR") {
         document.getElementById("creatorSection").style.display = "block";
         loadMyQuizzes();
@@ -55,7 +126,7 @@
         document.getElementById("takerSection").style.display = "block";
       }
 
-      // 📦 Load only creator's quizzes
+      // Load only creator's quizzes
       function loadMyQuizzes() {
         fetch("http://localhost:5000/api/quiz/my-quizzes", {
           headers: {
@@ -68,36 +139,44 @@
             quizList.innerHTML = "";
 
             if (!quizzes.length) {
-              quizList.innerHTML = "<p>No quizzes created yet.</p>";
+              quizList.innerHTML = `
+                <div class="empty-quiz-state">
+                  <span>+</span>
+                  <h4>No quizzes created yet</h4>
+                  <p>Your first quiz will appear here once you create it.</p>
+                </div>
+              `;
               return;
             }
 
             quizzes.forEach((quiz) => {
               quizList.innerHTML += `
-    <div class="quiz-card">
-      <div class="quiz-info">
-    <h4>${quiz.title}</h4>
-    <p class="status">Status: ${quiz.status}</p>
-  </div>
+                <article class="quiz-card dashboard-quiz-card">
+                  <div class="quiz-info">
+                    <span class="quiz-card-mark">&#10022;</span>
+                    <div>
+                      <h4>${quiz.title}</h4>
+                      <p class="status">Status: <strong>${quiz.status}</strong></p>
+                    </div>
+                  </div>
 
-    <div class="quiz-actions">
-  ${
-    quiz.status !== "LIVE"
-      ? `<button onclick="editQuiz(${quiz.id})">✏️Edit Quiz</button>`
-      : ``
-  }
+                  <div class="quiz-actions">
+                    ${
+                      quiz.status !== "LIVE"
+                        ? `<button class="quiz-action-button" onclick="editQuiz(${quiz.id})">Edit quiz</button>`
+                        : ``
+                    }
 
-  <button onclick="hostQuiz(${quiz.id})">▶️Host Quiz</button>
+                    <button class="quiz-action-button quiz-action-primary" onclick="hostQuiz(${quiz.id})">Host quiz</button>
 
-  ${
-    quiz.status === "COMPLETED"
-      ? `<button onclick="viewResult(${quiz.id})">📊Result</button>`
-      : ``
-  }
-</div>
-
-    </div>
-  `;
+                    ${
+                      quiz.status === "COMPLETED"
+                        ? `<button class="quiz-action-button quiz-action-result" onclick="viewResult(${quiz.id})">View result</button>`
+                        : ``
+                    }
+                  </div>
+                </article>
+              `;
             });
           })
           .catch(() => {
@@ -105,17 +184,17 @@
           });
       }
 
-      // ✏️ Edit quiz (redirect)
+      // Edit quiz redirect
       function editQuiz(id) {
         window.location.href = `edit-quiz.html?id=${id}`;
       }
 
-      // 🚀 Host quiz (redirect)
+      // Host quiz redirect
       function hostQuiz(id) {
         window.location.href = `host-quiz.html?id=${id}`;
       }
 
-      // 🚪 Logout
+      // Logout
       function logout() {
         localStorage.clear();
         window.location.href = "./login.html";

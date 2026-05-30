@@ -2,82 +2,153 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create Quiz | Exam Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="../css/style.css" />
   </head>
-  <body>
-    <div class="container create-quiz-container">
-      <h1>Create Quiz</h1>
+  <body class="dashboard-page create-quiz-page">
+    <header class="portal-header">
+      <nav class="portal-nav">
+        <a class="logo" href="../index.html" aria-label="Exam Portal home">
+          <span class="logo-mark">E</span>
+          <span>Exam<span>Portal</span></span>
+        </a>
 
-      <!-- Quiz title -->
-      <input id="title" type="text" placeholder="Quiz Title" />
-
-      <hr />
-
-      <!-- Question creator -->
-      <h3>Add Question</h3>
-
-      <input id="questionText" type="text" placeholder="Enter question" />
-
-      <div class="option-row">
-        <input type="radio" name="correct" value="0" />
-        <input class="option" type="text" placeholder="Option 1" />
-      </div>
-
-      <div class="option-row">
-        <input type="radio" name="correct" value="1" />
-        <input class="option" type="text" placeholder="Option 2" />
-      </div>
-
-      <div class="option-row">
-        <input type="radio" name="correct" value="2" />
-        <input class="option" type="text" placeholder="Option 3" />
-      </div>
-
-      <div class="option-row">
-        <input type="radio" name="correct" value="3" />
-        <input class="option" type="text" placeholder="Option 4" />
-      </div>
-
-      <!-- <div class="correct-answer-row">
-        <div class="answer-col">
-          <span>Option 1</span>
-          <input type="radio" name="correct" value="0" />
+        <div class="portal-nav-actions">
+          <span class="portal-status"><i></i> Creator workspace</span>
+          <a class="portal-nav-link" href="./dashboard.html">&larr; Dashboard</a>
         </div>
+      </nav>
+    </header>
 
-        <div class="answer-col">
-          <span>Option 2</span>
-          <input type="radio" name="correct" value="1" />
+    <main class="portal-main create-quiz-main">
+      <section class="create-page-heading">
+        <div>
+          <span class="portal-kicker">Quiz builder</span>
+          <h1>Create a new assessment.</h1>
+          <p>Shape a clear, focused quiz and publish it when everything feels right.</p>
         </div>
-
-        <div class="answer-col">
-          <span>Option 3</span>
-          <input type="radio" name="correct" value="2" />
+        <div class="builder-progress">
+          <span class="builder-progress-number">01</span>
+          <div>
+            <strong>Build your quiz</strong>
+            <small>Add a title and thoughtful questions</small>
+          </div>
         </div>
+      </section>
 
-        <div class="answer-col">
-          <span>Option 4</span>
-          <input type="radio" name="correct" value="3" />
-        </div>
-      </div> -->
+      <div class="create-quiz-layout">
+        <aside class="builder-sidebar">
+          <span class="portal-kicker">Assessment details</span>
+          <h2>Start with a clear title.</h2>
+          <p>Choose a concise name so learners immediately understand what they are about to take.</p>
 
-      <button onclick="addQuestion()">Add Question</button>
+          <label for="title">Quiz title</label>
+          <input id="title" type="text" placeholder="For example: JavaScript Fundamentals" />
 
-      <hr />
+          <div class="builder-tip">
+            <span>&#9671;</span>
+            <div>
+              <strong>Creator tip</strong>
+              <p>Keep questions focused and make each answer option easy to understand.</p>
+            </div>
+          </div>
 
-      <!-- Preview -->
-      <h3>Added Questions</h3>
-      <div id="questionPreview"></div>
+          <a class="builder-back-link" href="./dashboard.html">&larr; Back to dashboard</a>
+        </aside>
 
-      <hr />
+        <section class="builder-content">
+          <div class="question-editor">
+            <div class="builder-section-heading">
+              <div>
+                <span class="portal-kicker">Question editor</span>
+                <h2>Add a question</h2>
+                <p>Write your prompt, fill in four options, and select the correct answer.</p>
+              </div>
+              <span class="editor-badge">Four options</span>
+            </div>
 
-      <!-- Create quiz -->
-      <button onclick="createQuiz()">Create Quiz</button>
+            <label for="questionText">Question prompt</label>
+            <input id="questionText" type="text" placeholder="Enter your question" />
 
-      <p style="text-align: center; margin-top: 15px">
-        <a href="./dashboard.html">Back to Dashboard</a>
-      </p>
-    </div>
+            <div class="option-editor-heading">
+              <label>Answer options</label>
+              <span>Select the correct response</span>
+            </div>
+
+            <div class="builder-option-grid">
+              <label class="builder-option-row">
+                <input type="radio" name="correct" value="0" />
+                <span class="builder-option-letter">A</span>
+                <input class="option" type="text" placeholder="Enter option A" />
+              </label>
+
+              <label class="builder-option-row">
+                <input type="radio" name="correct" value="1" />
+                <span class="builder-option-letter">B</span>
+                <input class="option" type="text" placeholder="Enter option B" />
+              </label>
+
+              <label class="builder-option-row">
+                <input type="radio" name="correct" value="2" />
+                <span class="builder-option-letter">C</span>
+                <input class="option" type="text" placeholder="Enter option C" />
+              </label>
+
+              <label class="builder-option-row">
+                <input type="radio" name="correct" value="3" />
+                <span class="builder-option-letter">D</span>
+                <input class="option" type="text" placeholder="Enter option D" />
+              </label>
+            </div>
+
+            <button class="question-add-button" onclick="addQuestion()">
+              <span>+</span>
+              Add question to quiz
+            </button>
+          </div>
+
+          <div class="question-preview-card">
+            <div class="builder-section-heading preview-heading">
+              <div>
+                <span class="portal-kicker">Quiz outline</span>
+                <h2>Added questions</h2>
+                <p>Your saved questions will appear below as you build the quiz.</p>
+              </div>
+            </div>
+
+            <div id="questionPreview" class="builder-question-preview">
+              <div class="preview-empty-state">
+                <span>&#10022;</span>
+                <h3>Your quiz outline is empty</h3>
+                <p>Add your first question above to begin shaping the assessment.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="builder-publish">
+            <div>
+              <strong>Ready to publish?</strong>
+              <p>Review your title and questions before creating the quiz.</p>
+            </div>
+            <button class="quiz-create-button" onclick="createQuiz()">
+              Create quiz
+              <span>&rarr;</span>
+            </button>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="portal-footer">
+      <p>&copy; 2026 Exam Portal. Secure Online Examination System.</p>
+    </footer>
 
     <script src="../js/createQuiz.js"></script>
   </body>

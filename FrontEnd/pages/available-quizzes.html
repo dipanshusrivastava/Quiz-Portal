@@ -2,19 +2,76 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Available Quizzes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Available Quizzes | Exam Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="../css/style.css" />
   </head>
-  <body>
-    <div class="dashboard">
-      <h1>Available Quizzes</h1>
+  <body class="dashboard-page available-quizzes-page">
+    <header class="portal-header">
+      <nav class="portal-nav">
+        <a class="logo" href="../index.html" aria-label="Exam Portal home">
+          <span class="logo-mark">E</span>
+          <span>Exam<span>Portal</span></span>
+        </a>
 
-      <div id="quizList"></div>
+        <div class="portal-nav-actions">
+          <span class="portal-status"><i></i> Student workspace</span>
+          <a class="portal-nav-link" href="./dashboard.html">&larr; Dashboard</a>
+        </div>
+      </nav>
+    </header>
 
-      <p style="text-align: center">
-        <a href="./dashboard.html">Back to Dashboard</a>
-      </p>
-    </div>
+    <main class="portal-main available-quizzes-main">
+      <section class="available-hero">
+        <div>
+          <span class="portal-kicker">Assessment library</span>
+          <h1>Choose your next quiz.</h1>
+          <p>
+            Explore available assessments, enter the quiz passcode, and begin
+            when you feel ready.
+          </p>
+        </div>
+
+        <div class="available-hero-badge" aria-hidden="true">
+          <span>&#10022;</span>
+          <div>
+            <strong>Ready to learn</strong>
+            <small>Pick an assessment below</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="available-library">
+        <div class="available-library-heading">
+          <div>
+            <span class="portal-kicker">Open assessments</span>
+            <h2>Available quizzes</h2>
+            <p>Select a quiz to continue to its secure access step.</p>
+          </div>
+          <span class="library-label">Quiz library</span>
+        </div>
+
+        <div id="quizList" class="available-quiz-list"></div>
+      </section>
+
+      <section class="available-note">
+        <span class="support-icon">&#9671;</span>
+        <div>
+          <h3>Before you begin</h3>
+          <p>Keep your quiz passcode ready and choose a quiet place to complete your assessment.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="portal-footer">
+      <p>&copy; 2026 Exam Portal. Secure Online Examination System.</p>
+    </footer>
 
     <script src="../js/availableQuizzes.js"></script>
   </body>

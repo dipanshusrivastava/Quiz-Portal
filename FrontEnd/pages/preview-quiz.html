@@ -1,21 +1,86 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Quiz Preview</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Preview | Exam Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="../css/style.css" />
   </head>
+  <body class="dashboard-page preview-quiz-page">
+    <header class="portal-header">
+      <nav class="portal-nav">
+        <a class="logo" href="../index.html" aria-label="Exam Portal home">
+          <span class="logo-mark">E</span>
+          <span>Exam<span>Portal</span></span>
+        </a>
 
-  <body>
-    <div class="container">
-      <h1 id="quizTitle">Quiz Preview</h1>
+        <div class="portal-nav-actions">
+          <span class="portal-status"><i></i> Read-only preview</span>
+          <a class="portal-nav-link" href="./dashboard.html">&larr; Dashboard</a>
+        </div>
+      </nav>
+    </header>
 
-      <div id="questionsContainer"></div>
+    <main class="portal-main preview-quiz-main">
+      <section class="preview-hero">
+        <div>
+          <span class="portal-kicker">Assessment preview</span>
+          <h1 id="quizTitle">Quiz preview</h1>
+          <p>Review the complete assessment exactly as configured before sharing it with learners.</p>
+        </div>
 
-      <p style="text-align:center; color:#777; margin-top:20px;">
-        This is a read-only preview. Editing and submission are disabled.
-      </p>
-    </div>
+        <div class="preview-readonly-badge" aria-hidden="true">
+          <span>&#9671;</span>
+          <div>
+            <strong>Preview mode</strong>
+            <small>Changes are disabled</small>
+          </div>
+        </div>
+      </section>
+
+      <div class="preview-layout">
+        <section class="preview-question-panel">
+          <div class="preview-panel-heading">
+            <div>
+              <span class="portal-kicker">Question set</span>
+              <h2>Quiz questions</h2>
+              <p>Correct responses are highlighted for your review.</p>
+            </div>
+            <span class="library-label">Read only</span>
+          </div>
+
+          <div id="questionsContainer" class="preview-question-list">
+            <div class="preview-loading-state">
+              <span>&#10022;</span>
+              <p>Loading quiz questions...</p>
+            </div>
+          </div>
+        </section>
+
+        <aside class="preview-side-panel">
+          <span class="portal-kicker">Preview guidance</span>
+          <h2>A final check before learners begin.</h2>
+          <p>Use this page to confirm that questions, answer options, and correct responses are accurate.</p>
+
+          <div class="preview-side-note">
+            <span>&#10003;</span>
+            <p>This preview is read-only. Editing and submission are disabled.</p>
+          </div>
+
+          <a class="builder-back-link" href="./dashboard.html">&larr; Back to dashboard</a>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="portal-footer">
+      <p>&copy; 2026 Exam Portal. Secure Online Examination System.</p>
+    </footer>
 
     <script src="../js/preview-quiz.js"></script>
   </body>
